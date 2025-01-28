@@ -6,7 +6,7 @@ interface TripProps {
   duration: string;
 }
 
-const TripCard: React.FC<TripProps> = ({ title, date, duration }) => {
+const TripCard = ({ title, date, duration }: props) => {
   return (
     <div className="rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-200">
       <h1 className="text-2xl font-bold mb-2">{title}</h1>
