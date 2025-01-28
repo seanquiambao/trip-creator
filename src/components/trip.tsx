@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-interface TripProps {
+interface props {
   title: string;
   date: string;
   duration: string;
