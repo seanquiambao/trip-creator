@@ -1,12 +1,12 @@
 import Link from "next/link";
 
-interface TripProps {
+interface props {
   title: string;
   date: string;
   duration: string;
 }
 
-const TripCard: React.FC<TripProps> = ({ title, date, duration }) => {
+const TripCard = ({ title, date, duration }: props) => {
   return (
     <Link
       href="/"
