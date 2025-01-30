@@ -12,6 +12,10 @@ Sean Quiambao, Darin Park, Nicholas Wong, Naquib Haque, Taran Behara
 ![Prettier](https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 
+## Figma
+
+[Trip Creator Figma File](https://www.figma.com/design/ttzh3mKINGQXlEHmhxI6Sr/TripCreator?node-id=0-1&t=nvyfl9jmHZQXkHJW-1)
+
 ## Node.js
 
 Next.js Hackpack runs on Node.js Version 20.10.0 and higher. Please ensure you have Node.js installed via the [official website](https://nodejs.org/en).
