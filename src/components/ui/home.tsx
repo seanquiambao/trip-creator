@@ -1,17 +1,7 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
-export default function HomePage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      {" "}
-      {}
-      <HomeContent />
-    </Suspense>
-  );
-}
 
-function HomeContent() {
+export default function HomePage() {
   const searchParams = useSearchParams();
   const username = searchParams.get("username") || "User";
 

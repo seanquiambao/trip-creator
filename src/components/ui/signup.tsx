@@ -2,22 +2,26 @@
 import { useState } from "react";
 import { auth, db } from "@/lib/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 
-export default function Signup() {
+const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
   const router = useRouter();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+
+    if (!auth || !db) {
+      setError("Firebase is not initialized.");
+      return;
+    }
 
     try {
+      // Create user in Firebase Auth
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -25,28 +29,23 @@ export default function Signup() {
       );
       const user = userCredential.user;
 
-      await setDoc(doc(db, "users", user.uid), {
-        username: username,
-      });
+      // Store user data in Firestore
+      await setDoc(doc(db, "users", user.uid), { username });
 
-      alert("Signup successful!");
-
-      router.push(`/home?username=${username}`);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError("Signup failed. " + err.message);
-      } else {
-        setError("Signup failed due to an unknown error.");
-      }
+      // Redirect to home page with username
+      router.push(`/home?username=${encodeURIComponent(username)}`);
+    } catch (err) {
+      setError("Signup failed. Please try again.");
+      console.error("Signup Error:", err);
     }
   };
 
   return (
     <div className="h-screen flex items-center justify-center bg-white px-4">
-      <div className="w-full max-w-sm flex flex-col items-center">
+      <div className="w-full max-w-sm">
         <h2 className="text-3xl font-bold mb-6 text-center">Sign Up</h2>
         {error && <p className="text-red-500 text-center">{error}</p>}
-        <form onSubmit={handleSignup} className="flex flex-col w-full">
+        <form onSubmit={handleSignup} className="flex flex-col">
           <input
             type="text"
             placeholder="Username"
@@ -73,12 +72,14 @@ export default function Signup() {
           />
           <button
             type="submit"
-            className="bg-[#2E5C72] text-white font-bold p-3 rounded-lg hover:bg-[#254A5B] w-full transition duration-200 ease-in-out"
+            className="bg-[#2E627E] text-white font-bold p-3 rounded-lg"
           >
-            sign up
+            Sign Up
           </button>
         </form>
       </div>
     </div>
   );
-}
+};
+
+export default Signup;

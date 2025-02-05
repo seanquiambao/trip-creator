@@ -1,7 +1,7 @@
-// lib/firebaseConfig.js
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -12,8 +12,14 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const app =
+  typeof window !== "undefined"
+    ? !getApps().length
+      ? initializeApp(firebaseConfig)
+      : getApp()
+    : null;
+
+const auth = app ? getAuth(app) : null;
+const db = app ? getFirestore(app) : null;
 
 export { auth, db };
