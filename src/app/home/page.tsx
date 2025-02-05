@@ -1,6 +1,6 @@
 "use client";
 import HomePage from "@/components/ui/home";
 
-export default function homePage() {
-    return <HomePage/>; 
+export default function Page() {
+  return <HomePage />;
 }

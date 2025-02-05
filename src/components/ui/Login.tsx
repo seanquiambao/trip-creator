@@ -19,7 +19,11 @@ export default function Login() {
     setError("");
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
       const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -38,9 +42,8 @@ export default function Login() {
   return (
     <div className="h-screen flex items-center justify-center bg-white px-4">
       <div className="w-full max-w-sm flex flex-col items-center">
-        
         {}
-        <Image 
+        <Image
           src="/tc_logo.jpeg"
           alt="Trip Creator Logo"
           width={200}
@@ -50,7 +53,7 @@ export default function Login() {
 
         <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
         {error && <p className="text-red-500 text-center">{error}</p>}
-        
+
         <form onSubmit={handleLogin} className="flex flex-col w-full">
           <input
             type="email"
@@ -68,7 +71,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          
+
           {}
           <button
             type="submit"
