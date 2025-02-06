@@ -4,10 +4,9 @@ interface props {
   title: string;
   id: number;
   date: Date;
-  duration: string;
 }
 
-const TripCard = ({ id, title, date, duration }: props) => {
+const TripCard = ({ id, title, date }: props) => {
   return (
     <Link
       href={`/plan/${id}`}
@@ -15,7 +14,6 @@ const TripCard = ({ id, title, date, duration }: props) => {
     >
       <div className="text-4xl font-bold mb-2">{title}</div>
       <div className="text-gray-600 mb-1">{date.toDateString()}</div>
-      <div className="text-gray-500">{duration}</div>
     </Link>
   );
 };
