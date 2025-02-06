@@ -1,5 +1,5 @@
-const Home = () => {
-  return <>Hello World</>;
-};
+import Login from "@/components/login";
 
-export default Home;
+export default function LoginPage() {
+  return <Login />;
+}
