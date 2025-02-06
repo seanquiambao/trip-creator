@@ -1,9 +1,6 @@
 "use client";
 import { useState } from "react";
-import { auth, db } from "@/utils/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { setDoc, doc } from "firebase/firestore";
-import { useRouter } from "next/navigation";
+import { api } from "@/utils/api";
 
 const Signup = () => {
   const [form, setForm] = useState({
@@ -12,34 +9,18 @@ const Signup = () => {
     password: "",
   });
   const [error, setError] = useState("");
-  const router = useRouter();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!auth || !db) {
-      setError("Firebase is not initialized.");
-      return;
-    }
-
     try {
-      const { username, email, password } = form;
-      // Create user in Firebase Auth
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-
-      // Store user data in Firestore
-      await setDoc(doc(db, "users", user.uid), { username });
-
-      // Redirect to home page with username
-      router.push(`/home?username=${encodeURIComponent(username)}`);
-    } catch (err) {
+      await api({
+        url: "/api/signup",
+        method: "POST",
+        body: form,
+      });
+    } catch {
       setError("Signup failed. Please try again.");
-      console.error("Signup Error:", err);
     }
   };
 
