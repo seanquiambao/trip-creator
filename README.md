@@ -1,4 +1,8 @@
-# Next.js Hackpack
+# Trip Creator
+
+## CS 180 Project
+
+Sean Quiambao, Darin Park, Nicholas Wong, Naquib Haque, Taran Behara
 
 ![Next.js](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
@@ -7,6 +11,10 @@
 ![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)
 ![Prettier](https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
+
+## Figma
+
+[Trip Creator Figma File](https://www.figma.com/design/ttzh3mKINGQXlEHmhxI6Sr/TripCreator?node-id=0-1&t=nvyfl9jmHZQXkHJW-1)
 
 ## Node.js
 

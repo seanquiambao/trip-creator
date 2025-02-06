@@ -1,12 +1,5 @@
-import React from "react";
-import Navigation from "../components/navigation";
+import Login from "@/components/login";
 
-const Home = () => {
-  return (
-    <>
-      <Navigation />
-    </>
-  );
-};
-
-export default Home;
+export default function LoginPage() {
+  return <Login />;
+}
