@@ -6,9 +6,11 @@ import { setDoc, doc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 
 const Signup = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -21,6 +23,7 @@ const Signup = () => {
     }
 
     try {
+      const { username, email, password } = form;
       // Create user in Firebase Auth
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -50,29 +53,29 @@ const Signup = () => {
             type="text"
             placeholder="Username"
             className="p-3 border border-gray-300 rounded-lg mb-4 w-full"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={form.username}
+            onChange={(e) => setForm({ ...form, username: e.target.value })}
             required
           />
           <input
             type="email"
             placeholder="Email"
             className="p-3 border border-gray-300 rounded-lg mb-4 w-full"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
             required
           />
           <input
             type="password"
             placeholder="Password"
             className="p-3 border border-gray-300 rounded-lg mb-4 w-full"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
             required
           />
           <button
             type="submit"
-            className="bg-[#2E627E] text-white font-bold p-3 rounded-lg"
+            className="bg-trip-navy text-white font-bold p-3 rounded-lg"
           >
             Sign Up
           </button>
