@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import logo from "../app/logo.png";
 
-const Navigation: React.FC = () => {
+const Navigation = () => {
   return (
     <nav className="bg-trip-navy p-4 flex items-center justify-between shadow-md">
       <div className="flex items-center">

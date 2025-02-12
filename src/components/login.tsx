@@ -3,7 +3,9 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { api } from "@/utils/api";
+import { useRouter } from "next/navigation";
 const Login = () => {
+  const router = useRouter();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -18,6 +20,10 @@ const Login = () => {
         method: "POST",
         url: "/api/login",
         body: form,
+      }).then((response) => {
+        if (response.message === "OK") {
+          router.push("/trip");
+        }
       });
     } catch (err) {
       setError(`${err}`);
