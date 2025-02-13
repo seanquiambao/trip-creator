@@ -12,15 +12,9 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
-import { Trip } from "@/types/trip";
 
 const Page = () => {
   const [popup, setPopup] = useState(false);
-  const [trip, setTrip] = useState<Trip>({
-    id: 1,
-    title: "Hello",
-    date: new Date(),
-  });
   return (
     <div className="flex flex-col w-full p-6 gap-y-2">
       <div className="text-4xl font-bold">My Trips</div>
