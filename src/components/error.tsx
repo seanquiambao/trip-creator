@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface ErrorProps {
   code: number;
@@ -6,31 +6,10 @@ interface ErrorProps {
 }
 
 const Error: React.FC<ErrorProps> = ({ code, message }) => {
-  const styles = {
-    container: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "100vh",
-    },
-    title: {
-      fontSize: "5rem",
-      color: "#589FA3",
-      fontWeight: "bold",
-    },
-    message: {
-      fontSize: "2rem",
-      marginBottom: "1rem",
-      color: "black",
-      fontWeight: "bold",
-    },
-  };
-
   return (
-    <div className="bg-trip-navy" style={styles.container}>
-      <div style={styles.title}>{code}</div>
-      <div style={styles.message}>{message}</div>
+    <div className="h-screen flex flex-col items-center justify-center bg-trip-navy text-white">
+      <div className="text-5xl font-bold text-[#589FA3]">{code}</div>
+      <div className="text-2xl font-bold mb-4 text-black">{message}</div>
     </div>
   );
 };
