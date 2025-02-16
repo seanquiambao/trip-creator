@@ -1,8 +1,9 @@
+"use client";
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
 
 const containerStyle = {
   width: "100%",
-  height: "400px",
+  height: "700px",
 };
 
 const center = {
@@ -10,14 +11,11 @@ const center = {
   lng: -122.4194, // Default longitude (San Francisco)
 };
 
-const apiKey = process.env.GOOGLE_MAPS_API;
-if (!apiKey) {
-  throw new Error("Missing Google Maps API key");
-}
-
 const Map = () => {
   return (
-    <LoadScript googleMapsApiKey={apiKey}>
+    <LoadScript
+      googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API || ""}
+    >
       <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10} />
     </LoadScript>
   );
