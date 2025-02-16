@@ -10,9 +10,14 @@ const center = {
   lng: -122.4194, // Default longitude (San Francisco)
 };
 
+const apiKey = process.env.GOOGLE_MAPS_API;
+if (!apiKey) {
+  throw new Error("Missing Google Maps API key");
+}
+
 const Map = () => {
   return (
-    <LoadScript googleMapsApiKey={process.env.GOOGLE_MAPS_API}>
+    <LoadScript googleMapsApiKey={apiKey}>
       <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10} />
     </LoadScript>
   );
