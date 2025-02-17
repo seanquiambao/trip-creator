@@ -11,7 +11,6 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +33,7 @@ const Login = () => {
 
   return (
     <div className="h-screen flex items-center justify-center bg-white px-4">
+      <Toaster />
       <div className="w-full max-w-sm flex flex-col items-center">
         <Image
           src="/tc_logo.jpeg"
@@ -44,8 +44,6 @@ const Login = () => {
         />
 
         <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
-        <Toaster />
-        {error && <p className="text-red-500 text-center">{error}</p>}
 
         <form onSubmit={handleLogin} className="flex flex-col w-full">
           <input
