@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { api } from "@/utils/api";
 import { useRouter } from "next/navigation";
+import { toast, Toaster } from "react-hot-toast";
 const Login = () => {
   const router = useRouter();
   const [form, setForm] = useState({
@@ -26,7 +27,7 @@ const Login = () => {
         }
       });
     } catch (err) {
-      setError(`${err}`);
+      toast.error(`${err}`);
       console.error("Login Error:", err);
     }
   };
@@ -43,6 +44,7 @@ const Login = () => {
         />
 
         <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
+        <Toaster />
         {error && <p className="text-red-500 text-center">{error}</p>}
 
         <form onSubmit={handleLogin} className="flex flex-col w-full">
