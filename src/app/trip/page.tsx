@@ -12,14 +12,28 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
+import { Trip } from "@/types/trip";
 
 const Page = () => {
+  const [trips, setTrips] = useState<Trip[]>(TRIPS);
+  const [trip, setTrip] = useState<Trip>({
+    id: 0,
+    title: "",
+    date: new Date(),
+  });
   const [popup, setPopup] = useState(false);
+
+  const handleAdd = () => {
+    const newId = trips.length > 0 ? trips[trips.length - 1].id + 1 : 1;
+    const newTrip = { id: newId, title: trip.title, date: trip.date };
+    setTrips((prev) => [...prev, newTrip]);
+    setTrip({ id: 0, title: "", date: new Date() });
+  };
   return (
     <div className="flex flex-col w-full p-6 gap-y-2">
       <div className="text-4xl font-bold">My Trips</div>
       <div className="grid grid-cols-3 gap-2">
-        {TRIPS.map((trip, index) => (
+        {trips.map((trip, index) => (
           <TripCard
             key={index}
             id={trip.id}
@@ -34,11 +48,21 @@ const Page = () => {
           <AlertDialogHeader>
             <AlertDialogTitle>Add a Trip</AlertDialogTitle>
           </AlertDialogHeader>
-          <Input placeholder="title" />
+          <Input
+            placeholder="title"
+            onChange={(e) =>
+              setTrip((prev) => ({ ...prev, title: e.target.value }))
+            }
+          />
           <AlertDialogCancel onClick={() => setPopup(false)}>
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction onClick={() => setPopup(false)}>
+          <AlertDialogAction
+            onClick={() => {
+              handleAdd();
+              setPopup(false);
+            }}
+          >
             Add
           </AlertDialogAction>
         </AlertDialogContent>
