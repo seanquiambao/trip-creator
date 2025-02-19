@@ -29,6 +29,11 @@ const Page = () => {
     setTrips((prev) => [...prev, newTrip]);
     setTrip({ id: 0, title: "", date: new Date() });
   };
+
+  const handleDelete = (id: number) => {
+    const filteredTrips = trips.filter((item) => item.id !== id);
+    setTrips(filteredTrips);
+  };
   return (
     <div className="flex flex-col w-full p-6 gap-y-2">
       <div className="text-4xl font-bold">My Trips</div>
@@ -39,6 +44,7 @@ const Page = () => {
             id={trip.id}
             title={trip.title}
             date={trip.date}
+            handleDelete={handleDelete}
           />
         ))}
         <AddCard popup={popup} setPopup={setPopup} />
