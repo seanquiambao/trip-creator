@@ -1,11 +1,18 @@
 "use client";
 import { X, Clock, MapPin, DollarSign } from "lucide-react";
 
-const Activity = () => {
+interface ActivityProps {
+  title: string;
+  time: string;
+  location: string;
+  cost: string;
+}
+
+const Activity = ({ title, time, location, cost }: ActivityProps) => {
   return (
     <div className="group relative p-4 flex flex-col gap-2 text-white w-full">
       <div className="flex flex-row justify-between">
-        <div className="text-lg font-bold">Ono Hawaiian BBQ</div>
+        <div className="text-2xl font-bold">{title}</div>
         <X
           size={20}
           className="cursor-pointer text-white hover:text-white/20"
@@ -13,14 +20,14 @@ const Activity = () => {
         />
       </div>
 
-      <div className="flex items-center gap-2 text-white/20">
-        <Clock size={16} /> <span>8 PM</span>
+      <div className="flex items-center gap-2 text-white/20 text-lg">
+        <Clock size={20} /> <span>{time}</span>
       </div>
-      <div className="flex items-center gap-2 text-white/20">
-        <MapPin size={16} /> <span>1000 Main St.</span>
+      <div className="flex items-center gap-2 text-white/20 text-lg">
+        <MapPin size={20} /> <span>{location}</span>
       </div>
-      <div className="flex items-center gap-2 text-white/20">
-        <DollarSign size={16} /> <span>$100</span>
+      <div className="flex items-center gap-2 text-white/20 text-lg">
+        <DollarSign size={20} /> <span>{cost}</span>
       </div>
     </div>
   );
