@@ -16,7 +16,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      await api({
+      const response = await api({
         method: "POST",
         url: "/api/login",
         body: form,
@@ -26,7 +26,7 @@ const Login = () => {
         }
       });
     } catch (err) {
-      toast.error(`${err}`);
+      toast.error(`Error: ${(err as { message: string }).message}`);
       console.error("Login Error:", err);
     }
   };
