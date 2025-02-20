@@ -1,5 +1,5 @@
-import Days from "@/components/days";
+import Login from "@/components/login";
 
 export default function LoginPage() {
-  return <Days />;
+  return <Login />;
 }
