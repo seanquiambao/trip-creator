@@ -1,4 +1,3 @@
-import Activity from "@/components/activity";
 import Days from "@/components/days";
 import Map from "@/components/trip/map";
 const Page = () => {
