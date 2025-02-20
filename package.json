@@ -10,7 +10,8 @@
     "format": "npx prettier --write .",
     "check": "npx prettier --check .",
     "eslint": "npx eslint . --ext js --ext jsx",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "cypress open"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.6",
@@ -33,6 +34,7 @@
     "@types/node": "22.10.3",
     "@types/react": "^19.0.2",
     "autoprefixer": "^10.4.15",
+    "cypress": "^14.0.3",
     "eslint": "^8.42.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-next": "^13.4.19",
