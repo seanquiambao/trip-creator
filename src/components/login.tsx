@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { api } from "@/utils/api";
 import { useRouter } from "next/navigation";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 const Login = () => {
   const router = useRouter();
   const [form, setForm] = useState({
@@ -16,13 +16,15 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await api({
+      await api({
         method: "POST",
         url: "/api/login",
         body: form,
       }).then((response) => {
         if (response.message === "OK") {
           router.push("/trip");
+        } else {
+          console.log("test");
         }
       });
     } catch (err) {
@@ -33,7 +35,6 @@ const Login = () => {
 
   return (
     <div className="h-screen flex items-center justify-center bg-white px-4">
-      <Toaster />
       <div className="w-full max-w-sm flex flex-col items-center">
         <Image
           src="/tc_logo.jpeg"

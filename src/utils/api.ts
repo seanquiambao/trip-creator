@@ -1,5 +1,3 @@
-import { error } from "console";
-
 type API = {
   url: string;
   method: "GET" | "POST" | "PUT" | "DELETE";
@@ -17,7 +15,7 @@ export const api = async ({ url, method, body }: API) => {
 
     return data;
   } catch (err) {
-    let error: { message: string; status: number } = {
+    const error: { message: string; status: number } = {
       message: "Internal Server Error",
       status: 500,
     };
