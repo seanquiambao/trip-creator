@@ -15,22 +15,22 @@ const Login = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      await api({
-        method: "POST",
-        url: "/api/login",
-        body: form,
-      }).then((response) => {
+    await api({
+      method: "POST",
+      url: "/api/login",
+      body: form,
+    })
+      .then((response) => {
         if (response.message === "OK") {
           router.push("/trip");
         } else {
-          console.log("test");
+          console.log(response.message);
+          throw new Error(response.message);
         }
+      })
+      .catch((response) => {
+        toast.error(`Error: ${response.message}`);
       });
-    } catch (err) {
-      toast.error(`Error: ${(err as { message: string }).message}`);
-      console.error("Login Error:", err);
-    }
   };
 
   return (

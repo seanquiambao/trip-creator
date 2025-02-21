@@ -26,12 +26,25 @@ export const POST = async (req: Request) => {
     }
 
     return res.json({ message: "OK" }, { status: 200 });
-  } catch (err) {
+  } catch (err: unknown) {
+    const errorCode = extractErrorCode(err);
+    if (errorCode === "auth/invalid-credential") {
+      return res.json(
+        { message: "Incorrect email/password " },
+        { status: 401 }
+      );
+    }
     return res.json(
       {
-        message: `Internal Server Error: ${err}`,
+        message: `Internal Server Error: Contact Developers`,
       },
       { status: 500 }
     );
   }
 };
+
+function extractErrorCode(err: unknown): string | null {
+  return typeof err === "object" && err !== null && "code" in err
+    ? (err as { code: string }).code
+    : null;
+}
