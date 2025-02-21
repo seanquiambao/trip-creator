@@ -4,31 +4,33 @@ import Image from "next/image";
 import Link from "next/link";
 import { api } from "@/utils/api";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 const Login = () => {
   const router = useRouter();
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      await api({
-        method: "POST",
-        url: "/api/login",
-        body: form,
-      }).then((response) => {
+    await api({
+      method: "POST",
+      url: "/api/login",
+      body: form,
+    })
+      .then((response) => {
         if (response.message === "OK") {
           router.push("/trip");
+        } else {
+          console.log(response.message);
+          throw new Error(response.message);
         }
+      })
+      .catch((response) => {
+        toast.error(`Error: ${response.message}`);
       });
-    } catch (err) {
-      setError(`${err}`);
-      console.error("Login Error:", err);
-    }
   };
 
   return (
@@ -43,7 +45,6 @@ const Login = () => {
         />
 
         <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
-        {error && <p className="text-red-500 text-center">{error}</p>}
 
         <form onSubmit={handleLogin} className="flex flex-col w-full">
           <input

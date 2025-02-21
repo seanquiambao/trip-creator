@@ -5,12 +5,20 @@ type API = {
 };
 
 export const api = async ({ url, method, body }: API) => {
-  const response = await fetch(url, {
-    method: method,
-    body: JSON.stringify(body),
-  });
+  try {
+    const response = await fetch(url, {
+      method: method,
+      body: JSON.stringify(body),
+    });
 
-  const data = await response.json();
+    const data = await response.json();
 
-  return data;
+    return data;
+  } catch (err) {
+    const error: { message: string; status: number } = {
+      message: "Internal Server Error",
+      status: 500,
+    };
+    throw error;
+  }
 };
