@@ -1,5 +1,5 @@
 "use client";
-import Days from "@/components/days";
+import Days from "@/components/trip/days";
 import Map from "@/components/trip/map";
 import TripDetail from "@/components/trip/trip-detail";
 import { Day } from "@/types/trip";
