@@ -3,67 +3,14 @@ import Activity from "./activity";
 import { Day } from "@/types/trip";
 
 // Sample mock data for days and activities
-const mockDays: Day[] = [
-  {
-    date: new Date(11, 11, 2025),
-    day: 1,
-    activities: [
-      {
-        title: "Atlantic Beach Newport Hotel",
-        time: "5 PM",
-        location: "10900 Albany St.",
-        cost: 100,
-      },
-      {
-        title: "Ono Hawaiian BBQ",
-        time: "8 PM",
-        location: "1000 Main St.",
-        cost: 100,
-      },
-    ],
-  },
-  {
-    date: new Date(11, 11, 2025),
-    day: 1,
-    activities: [
-      {
-        title: "Atlantic Beach Newport Hotel",
-        time: "5 PM",
-        location: "10900 Albany St.",
-        cost: 100,
-      },
-      {
-        title: "Ono Hawaiian BBQ",
-        time: "8 PM",
-        location: "1000 Main St.",
-        cost: 100,
-      },
-    ],
-  },
-  {
-    date: new Date(11, 11, 2025),
-    day: 1,
-    activities: [
-      {
-        title: "Atlantic Beach Newport Hotel",
-        time: "5 PM",
-        location: "10900 Albany St.",
-        cost: 100,
-      },
-      {
-        title: "Ono Hawaiian BBQ",
-        time: "8 PM",
-        location: "1000 Main St.",
-        cost: 100,
-      },
-    ],
-  },
-];
 
-const Days = () => {
+type props = {
+  days: Day[];
+};
+const Days = ({ days }: props) => {
   return (
     <div className="flex flex-col gap-4 w-full">
-      {mockDays.map((day, index) => (
+      {days.map((day, index) => (
         <div key={index} className="flex flex-row text-white  w-full">
           <div className="flex flex-col items-center justify-center">
             <div className="flex items-center gap-6">

@@ -7,6 +7,7 @@ import {
 import { useState, useRef } from "react";
 import { PlaceInfo, SelectedPlace } from "@/types/place";
 import PlaceModal from "./place-modal";
+import { Day } from "@/types/trip";
 
 const libraries: "places"[] = ["places"];
 
@@ -20,7 +21,12 @@ const center = {
   lng: -122.4194,
 };
 
-const Map = () => {
+type props = {
+  days: Day[];
+  setDays: (value: Day[]) => void;
+};
+
+const Map = ({ days, setDays }: props) => {
   const mapRef = useRef<google.maps.Map | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<SelectedPlace | null>(
     null
@@ -117,6 +123,8 @@ const Map = () => {
             <PlaceModal
               selectedPlace={selectedPlace}
               setSelectedPlace={setSelectedPlace}
+              days={days}
+              setDays={setDays}
             />
           )}
         </GoogleMap>

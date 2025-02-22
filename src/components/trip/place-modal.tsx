@@ -1,3 +1,4 @@
+"use client";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -10,12 +11,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { SelectedPlace } from "@/types/place";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
+import { Day } from "@/types/trip";
+import { useState } from "react";
+import Select from "@/components/global/select";
 
 type props = {
   selectedPlace: SelectedPlace;
   setSelectedPlace: (selected: SelectedPlace | null) => void;
+  days: Day[];
+  setDays: (value: Day[]) => void;
 };
-const PlaceModal = ({ selectedPlace, setSelectedPlace }: props) => {
+const PlaceModal = ({
+  selectedPlace,
+  setSelectedPlace,
+  days,
+  setDays,
+}: props) => {
+  const [selectedDay, setSelectedDay] = useState(0);
   return (
     <AlertDialog open={selectedPlace !== null}>
       <AlertDialogContent>
@@ -27,6 +39,12 @@ const PlaceModal = ({ selectedPlace, setSelectedPlace }: props) => {
         </AlertDialogHeader>
         <div className="flex gap-4">
           <div className="flex flex-col gap-2 w-2/3">
+            <Select
+              meta={{
+                options: days.map((item) => "Day " + item.day),
+                placeholder: "Select Day",
+              }}
+            />
             <Input placeholder="Select time" type="time" />
             <Input placeholder="Set budget" type="number" />
           </div>
@@ -38,8 +56,13 @@ const PlaceModal = ({ selectedPlace, setSelectedPlace }: props) => {
           >
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction className="bg-trip-navy text-white px-3 font-semibold rounded-md">
-            Submit
+          <AlertDialogAction
+            onClick={() => {
+              setSelectedPlace(null);
+            }}
+            className="bg-trip-navy text-white px-3 font-semibold rounded-md"
+          >
+            Add
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
