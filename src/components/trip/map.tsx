@@ -6,7 +6,7 @@ import {
 } from "@react-google-maps/api";
 import { useState, useRef } from "react";
 import { PlaceInfo, SelectedPlace } from "@/types/place";
-import Place from "./place";
+import PlaceModal from "./place-modal";
 
 const libraries: "places"[] = ["places"];
 
@@ -55,7 +55,6 @@ const Map = () => {
     }
     const service = new window.google.maps.places.PlacesService(mapRef.current);
 
-    console.log("hello:");
     service.getDetails({ placeId }, (place, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         setSelectedPlace({
@@ -115,7 +114,7 @@ const Map = () => {
           }}
         >
           {selectedPlace && (
-            <Place
+            <PlaceModal
               selectedPlace={selectedPlace}
               setSelectedPlace={setSelectedPlace}
             />

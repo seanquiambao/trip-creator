@@ -15,7 +15,7 @@ type props = {
   selectedPlace: SelectedPlace;
   setSelectedPlace: (selected: SelectedPlace | null) => void;
 };
-const Place = ({ selectedPlace, setSelectedPlace }: props) => {
+const PlaceModal = ({ selectedPlace, setSelectedPlace }: props) => {
   return (
     <AlertDialog open={selectedPlace !== null}>
       <AlertDialogContent>
@@ -31,15 +31,20 @@ const Place = ({ selectedPlace, setSelectedPlace }: props) => {
             <Input placeholder="Set budget" type="number" />
           </div>
         </div>
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setSelectedPlace(null)}>
+        <AlertDialogFooter className="flex flex-row gap-2">
+          <AlertDialogCancel
+            className="bg-destructive hover:bg-desctructive text-white hover:text-white font-bold"
+            onClick={() => setSelectedPlace(null)}
+          >
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction>Submit</AlertDialogAction>
+          <AlertDialogAction className="bg-trip-navy text-white px-3 font-semibold rounded-md">
+            Submit
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );
 };
 
-export default Place;
+export default PlaceModal;

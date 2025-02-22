@@ -8,4 +8,5 @@ export type PlaceInfo = {
 export type SelectedPlace = {
   name: string;
   address: string;
+  photoUrl?: string;
 };
