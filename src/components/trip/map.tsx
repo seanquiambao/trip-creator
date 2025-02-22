@@ -16,8 +16,8 @@ const containerStyle = {
 };
 
 const center = {
-  lat: 37.7749, // Default latitude (San Francisco)
-  lng: -122.4194, // Default longitude (San Francisco)
+  lat: 37.7749,
+  lng: -122.4194,
 };
 
 const Map = () => {
@@ -28,7 +28,6 @@ const Map = () => {
   const searchBoxRef = useRef<google.maps.places.SearchBox | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  // Handle place search
   const handlePlaceSearch = () => {
     if (!searchBoxRef.current) return;
     const places = searchBoxRef.current.getPlaces();
@@ -49,7 +48,6 @@ const Map = () => {
     }
   };
 
-  // Fetch place details when clicking a marker
   const fetchPlaceDetails = (placeId: string) => {
     if (!mapRef.current) {
       console.log("OOPS");
@@ -73,7 +71,7 @@ const Map = () => {
       googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API || ""}
       libraries={libraries}
     >
-      <div className="relative w-full">
+      <div className="relative w-1/2">
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
           <StandaloneSearchBox
             onLoad={(ref) => (searchBoxRef.current = ref)}
@@ -88,21 +86,19 @@ const Map = () => {
           </StandaloneSearchBox>
         </div>
 
-        {/* Google Map */}
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
           zoom={10}
           onLoad={(googlemap) => {
             mapRef.current = googlemap;
-            // Listen for clicks on POI markers
             google.maps.event.addListener(
               googlemap,
               "click",
               (event: google.maps.MapMouseEvent & { placeId?: string }) => {
                 const clickedPlaceId = event.placeId;
                 if (clickedPlaceId) {
-                  fetchPlaceDetails(clickedPlaceId); // Fetch details for clicked POI marker
+                  fetchPlaceDetails(clickedPlaceId);
                 }
               }
             );
@@ -118,7 +114,6 @@ const Map = () => {
             });
           }}
         >
-          {/* Info Window for selected place */}
           {selectedPlace && (
             <Place
               selectedPlace={selectedPlace}
