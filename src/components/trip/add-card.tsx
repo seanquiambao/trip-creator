@@ -9,6 +9,7 @@ const AddCard = ({ popup, setPopup }: props) => {
     <div
       onClick={() => setPopup(!popup)}
       className="cursor-pointer rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-200 flex flex-col items-center"
+      data-testid="add-card"
     >
       <Plus className="text-black" size={64} />
       <div className="font-bold text-2xl">Add Trip</div>

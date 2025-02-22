@@ -49,7 +49,7 @@ const Page = () => {
         ))}
         <AddCard popup={popup} setPopup={setPopup} />
       </div>
-      <AlertDialog open={popup}>
+      <AlertDialog open={popup} data-testid="add-trip-title">
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Add a Trip</AlertDialogTitle>
