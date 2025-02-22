@@ -2,12 +2,11 @@
 import {
   GoogleMap,
   LoadScript,
-  Marker,
   StandaloneSearchBox,
-  InfoWindow,
 } from "@react-google-maps/api";
 import { useState, useRef } from "react";
 import { PlaceInfo, SelectedPlace } from "@/types/place";
+import Place from "./place";
 
 const libraries: "places"[] = ["places"];
 
@@ -22,8 +21,7 @@ const center = {
 };
 
 const Map = () => {
-  const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [markers, setMarkers] = useState<PlaceInfo[]>([]);
+  const mapRef = useRef<google.maps.Map | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<SelectedPlace | null>(
     null
   );
@@ -43,29 +41,28 @@ const Map = () => {
       address: place.formatted_address || "",
     }));
 
-    setMarkers(newMarkers);
     setSelectedPlace(null);
 
-    if (newMarkers.length > 0 && map) {
-      map.panTo(newMarkers[0].position);
-      map.setZoom(14);
+    if (newMarkers.length > 0 && mapRef.current) {
+      mapRef.current.panTo(newMarkers[0].position);
+      mapRef.current.setZoom(14);
     }
   };
 
   // Fetch place details when clicking a marker
   const fetchPlaceDetails = (placeId: string) => {
-    if (!map) return;
-    const service = new window.google.maps.places.PlacesService(map);
+    if (!mapRef.current) {
+      console.log("OOPS");
+      return;
+    }
+    const service = new window.google.maps.places.PlacesService(mapRef.current);
 
+    console.log("hello:");
     service.getDetails({ placeId }, (place, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         setSelectedPlace({
           name: place?.name!,
           address: place?.formatted_address || "N/A",
-          phone: place?.formatted_phone_number || "N/A",
-          rating: place?.rating || "N/A",
-          website: place?.website || "N/A",
-          position: place?.geometry!.location!,
         });
       }
     });
@@ -77,7 +74,6 @@ const Map = () => {
       libraries={libraries}
     >
       <div className="relative w-full">
-        {/* Search Box - Positioned at the top */}
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
           <StandaloneSearchBox
             onLoad={(ref) => (searchBoxRef.current = ref)}
@@ -97,49 +93,37 @@ const Map = () => {
           mapContainerStyle={containerStyle}
           center={center}
           zoom={10}
-          onLoad={(map) => setMap(map)}
-        >
-          {/* Markers */}
-          {markers.map((marker) => (
-            <Marker
-              key={marker.id}
-              position={marker.position}
-              onClick={() => fetchPlaceDetails(marker.id)}
-            />
-          ))}
+          onLoad={(googlemap) => {
+            mapRef.current = googlemap;
+            // Listen for clicks on POI markers
+            google.maps.event.addListener(
+              googlemap,
+              "click",
+              (event: google.maps.MapMouseEvent & { placeId?: string }) => {
+                const clickedPlaceId = event.placeId;
+                if (clickedPlaceId) {
+                  fetchPlaceDetails(clickedPlaceId); // Fetch details for clicked POI marker
+                }
+              }
+            );
 
+            googlemap.setOptions({
+              styles: [
+                {
+                  featureType: "poi",
+                  elementType: "labels",
+                  stylers: [{ visibility: "on" }],
+                },
+              ],
+            });
+          }}
+        >
           {/* Info Window for selected place */}
           {selectedPlace && (
-            <InfoWindow
-              position={selectedPlace.position}
-              onCloseClick={() => setSelectedPlace(null)}
-            >
-              <div className="p-3 bg-white rounded-lg shadow-lg">
-                <h3 className="text-lg font-semibold">{selectedPlace.name}</h3>
-                <p className="text-sm text-gray-700">
-                  <strong>Address:</strong> {selectedPlace.address}
-                </p>
-                <p className="text-sm text-gray-700">
-                  <strong>Phone:</strong> {selectedPlace.phone}
-                </p>
-                <p className="text-sm text-gray-700">
-                  <strong>Rating:</strong> {selectedPlace.rating}
-                </p>
-                {selectedPlace.website && (
-                  <p className="text-sm">
-                    <strong>Website:</strong>{" "}
-                    <a
-                      href={selectedPlace.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 hover:underline"
-                    >
-                      {selectedPlace.website}
-                    </a>
-                  </p>
-                )}
-              </div>
-            </InfoWindow>
+            <Place
+              selectedPlace={selectedPlace}
+              setSelectedPlace={setSelectedPlace}
+            />
           )}
         </GoogleMap>
       </div>

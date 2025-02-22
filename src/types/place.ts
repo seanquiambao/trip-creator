@@ -8,8 +8,4 @@ export type PlaceInfo = {
 export type SelectedPlace = {
   name: string;
   address: string;
-  phone: string;
-  rating: number | string;
-  website: string;
-  position: google.maps.LatLng;
 };
