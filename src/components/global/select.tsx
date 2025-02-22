@@ -15,19 +15,18 @@ type SelectInput = {
 };
 type props = {
   meta: SelectInput;
-  onChange?: (value: number) => void;
+  onChange?: (value: string, index: number) => void;
 };
 const Select = ({ meta, onChange }: props) => {
   const { options, placeholder = "Select an option" } = meta;
-  const handleSelectChange = (value: string) => {
-    const index = options.findIndex((option) => option === value);
-    if (onChange && index !== -1) {
-      onChange(index);
-    }
-  };
   return (
     <div>
-      <SelectBase onValueChange={handleSelectChange}>
+      <SelectBase
+        onValueChange={(value: string) => {
+          const index = options.indexOf(value); // Get the index of the selected value
+          onChange?.(value, index);
+        }}
+      >
         <SelectTrigger className="inline-flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>

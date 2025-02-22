@@ -12,9 +12,10 @@ import { Input } from "@/components/ui/input";
 import { SelectedPlace } from "@/types/place";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { Activity, Day } from "@/types/trip";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Select from "@/components/global/select";
 import toast from "react-hot-toast";
+import { TIME } from "@/data/time";
 
 type props = {
   selectedPlace: SelectedPlace;
@@ -35,6 +36,16 @@ const PlaceModal = ({
     time: "",
     cost: 0,
   });
+
+  const handleChange = (value: string, index: number, type: "day" | "time") => {
+    console.log(value, index); // Log both value and index
+    if (type === "day") {
+      setSelectedDay(index); // Handle index for Day select
+    } else if (type === "time") {
+      setActivity({ ...activity, time: value }); // Handle value for Time select
+    }
+  };
+
   return (
     <AlertDialog open={selectedPlace !== null}>
       <AlertDialogContent>
@@ -51,14 +62,14 @@ const PlaceModal = ({
                 options: days.map((item) => "Day " + item.day),
                 placeholder: "Select Day",
               }}
-              onChange={(index) => setSelectedDay(index)}
+              onChange={(value, index) => handleChange(value, index, "day")}
             />
-            <Input
-              placeholder="Select time"
-              type="time"
-              onChange={(e) =>
-                setActivity({ ...activity, time: e.target.value })
-              }
+            <Select
+              meta={{
+                options: TIME,
+                placeholder: "Select Time",
+              }}
+              onChange={(value, index) => handleChange(value, index, "time")}
             />
             <Input
               placeholder="Set budget"
