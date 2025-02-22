@@ -38,7 +38,6 @@ const PlaceModal = ({
   });
 
   const handleChange = (value: string, index: number, type: "day" | "time") => {
-    console.log(value, index); // Log both value and index
     if (type === "day") {
       setSelectedDay(index); // Handle index for Day select
     } else if (type === "time") {
@@ -91,7 +90,7 @@ const PlaceModal = ({
             onClick={() => {
               const updatedDays = [...days]; // Copy the current days array
 
-              if (!selectedDay) {
+              if (selectedDay === null) {
                 toast.error("Please Select a day");
                 return;
               }

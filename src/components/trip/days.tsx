@@ -1,13 +1,37 @@
 import { X } from "lucide-react";
 import Activity from "./activity";
 import { Day } from "@/types/trip";
-
-// Sample mock data for days and activities
+import { useEffect } from "react";
+import { Activity as ActivityType } from "@/types/trip";
 
 type props = {
   days: Day[];
+  setDays: (value: Day[]) => void;
 };
-const Days = ({ days }: props) => {
+const Days = ({ days, setDays }: props) => {
+  const convertTo24HourFormat = (time: string) => {
+    const [hour, period] = time.split(" ");
+    let h = Number(hour);
+    if (period === "PM" && h !== 12) h += 12;
+    if (period === "AM" && h === 12) h = 0; // Handle 12 AM case
+    return h * 60; // Convert to minutes for easy comparison
+  };
+  const sortActivitiesByTime = (activities: ActivityType[]) => {
+    return activities.sort((a, b) => {
+      const timeA = convertTo24HourFormat(a.time);
+      const timeB = convertTo24HourFormat(b.time);
+      console.log(timeA, timeB);
+      return timeA - timeB;
+    });
+  };
+  useEffect(() => {
+    const sortedDays = days.map((day) => ({
+      ...day,
+      activities: sortActivitiesByTime([...day.activities]),
+    }));
+    setDays(sortedDays);
+  }, [setDays]);
+
   return (
     <div className="flex flex-col gap-4 w-full">
       {days.map((day, index) => (
