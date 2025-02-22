@@ -29,15 +29,15 @@ export const DAYS: Day[] = [
     day: 1,
     activities: [
       {
-        title: "Atlantic Beach Newport Hotel",
-        time: "5 PM",
-        location: "10900 Albany St.",
-        cost: 100,
-      },
-      {
         title: "Ono Hawaiian BBQ",
         time: "8 PM",
         location: "1000 Main St.",
+        cost: 100,
+      },
+      {
+        title: "Atlantic Beach Newport Hotel",
+        time: "5 PM",
+        location: "10900 Albany St.",
         cost: 100,
       },
     ],

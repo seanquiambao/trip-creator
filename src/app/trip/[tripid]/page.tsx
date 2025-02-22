@@ -12,7 +12,7 @@ const Page = () => {
     <div className="bg-trip-navy/90 flex flex-row items-center justify-between w-full h-fit">
       <div className="self-start p-6 w-2/3 overflow-y-auto max-h-screen">
         <TripDetail title="San Diego Trip 2025" date={new Date()} />
-        <Days days={days} />
+        <Days days={days} setDays={setDays} />
       </div>
       <Map days={days} setDays={setDays} />
     </div>
