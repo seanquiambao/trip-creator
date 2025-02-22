@@ -7,10 +7,10 @@ type props = {
 };
 const TripDetail = ({ title, date }: props) => {
   return (
-    <div>
+    <div className="flex flex-col gap-4 items-start">
       <div className="text-white font-bold text-6xl">{title}</div>
       <Popover>
-        <PopoverTrigger className="text-white font-bold text-4xl">
+        <PopoverTrigger className="text-white font-bold text-4xl rounded-md border-white/25 border p-4">
           {date.toLocaleDateString()}
         </PopoverTrigger>
         <PopoverContent>
