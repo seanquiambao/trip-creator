@@ -51,6 +51,7 @@ const Login = () => {
             type="email"
             placeholder="Email"
             className="p-3 border border-gray-300 rounded-lg mb-4 w-full"
+            data-testid="email"
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
             required
@@ -59,6 +60,7 @@ const Login = () => {
             type="password"
             placeholder="Password"
             className="p-3 border border-gray-300 rounded-lg mb-4 w-full"
+            data-testid="password"
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
             required
@@ -66,6 +68,7 @@ const Login = () => {
           <button
             type="submit"
             className="bg-trip-navy text-white font-bold p-3 rounded-lg w-full"
+            data-testid="login"
           >
             Login
           </button>
