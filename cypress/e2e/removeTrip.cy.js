@@ -1,5 +1,3 @@
-import { count } from "console";
-
 describe("Remove Trip", () => {
   it("Removes Trip", () => {
     cy.visit("http://localhost:3000/trip");

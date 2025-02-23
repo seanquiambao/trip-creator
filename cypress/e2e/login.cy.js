@@ -12,6 +12,7 @@ describe("Login Tests", function () {
       cy.get('[data-testid="email"]').type(credentials.username);
       cy.get('[data-testid="password"]').type(credentials.password);
       cy.get('[data-testid="login"]').click();
+      cy.url().should("include", "/trip");
     });
   });
 });
