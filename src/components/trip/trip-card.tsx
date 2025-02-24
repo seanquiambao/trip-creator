@@ -10,10 +10,14 @@ interface props {
 
 const TripCard = ({ id, title, date, handleDelete }: props) => {
   return (
-    <div className="rounded-2xl relative shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-200 block">
+    <div
+      className="rounded-2xl relative shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-200 block"
+      data-testid="trip-card"
+    >
       <X
         onClick={() => handleDelete(id)}
         className="absolute top-2 right-2 cursor-pointer"
+        data-testid="remove-trip"
       />
       <Link className="text-4xl font-bold mb-2" href={`/trip/${id}`}>
         {title}
