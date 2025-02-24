@@ -5,7 +5,7 @@ interface ActivityProps {
   title: string;
   time: string;
   location: string;
-  cost: string;
+  cost: number;
 }
 
 const Activity = ({ title, time, location, cost }: ActivityProps) => {

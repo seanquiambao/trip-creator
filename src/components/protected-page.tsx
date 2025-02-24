@@ -3,12 +3,14 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/utils/firebase";
 import Fault from "@/utils/error";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type props = {
   children: React.ReactNode;
 };
 
 const ProtectedPage = ({ children }: props) => {
+  const router = useRouter();
   const [user, setUser] = useState<null | object>(null);
   const [loading, setLoading] = useState(true);
 
@@ -26,12 +28,9 @@ const ProtectedPage = ({ children }: props) => {
   }, []);
 
   if (loading) return <>Loading</>;
-  if (!user)
-    throw new Fault(
-      403,
-      "Forbidden Access",
-      "You need to login to view content."
-    );
+  if (!user) {
+    router.push("/");
+  }
   return <div>{children}</div>;
 };
 

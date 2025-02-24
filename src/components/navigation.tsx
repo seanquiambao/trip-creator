@@ -7,7 +7,7 @@ const Navigation = () => {
   return (
     <nav className="bg-trip-navy p-4 flex items-center justify-between shadow-md">
       <div className="flex items-center">
-        <Link href="/">
+        <Link href="/trip">
           <Image
             src={logo}
             alt="Logo"
