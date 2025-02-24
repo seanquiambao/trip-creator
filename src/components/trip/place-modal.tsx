@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { SelectedPlace } from "@/types/place";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { Activity, Day } from "@/types/trip";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Select from "@/components/global/select";
 import toast from "react-hot-toast";
 import { TIME } from "@/data/time";
