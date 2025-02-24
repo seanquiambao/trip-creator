@@ -16,7 +16,7 @@ export const api = async ({ url, method, body }: API) => {
 
     const data = await response.json();
     toast.dismiss();
-    toast.success("Successfully created!", { removeDelay: 500 });
+    toast.success("Successful!", { removeDelay: 500 });
     return data;
   } catch (err) {
     console.log(err);
