@@ -2,7 +2,7 @@
 import TripCard from "@/components/trip/trip-card";
 import AddCard from "@/components/trip/add-card";
 import { TRIPS } from "@/data/trips";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogHeader,
@@ -13,6 +13,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Trip } from "@/types/trip";
+import { db, auth } from "@/utils/firebase";
+import { collection, addDoc, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { User, onAuthStateChanged } from "firebase/auth";
 
 const Page = () => {
   const [trips, setTrips] = useState<Trip[]>(TRIPS);
@@ -22,12 +25,40 @@ const Page = () => {
     date: new Date(),
   });
   const [popup, setPopup] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
 
-  const handleAdd = () => {
-    const newId = trips.length > 0 ? trips[trips.length - 1].id + 1 : 1;
-    const newTrip = { id: newId, title: trip.title, date: trip.date };
-    setTrips((prev) => [...prev, newTrip]);
-    setTrip({ id: 0, title: "", date: new Date() });
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+        fetchTrips(currentUser.uid);
+        console.log("User is authenticated:", currentUser);
+      } else {
+        setUser(null);
+        console.log("User is not authenticated");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const fetchTrips = async (userId: string) => {
+    const q = query(collection(db, "trips"), where("userId", "==", userId));
+    const querySnapshot = await getDocs(q);
+    const tripsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Partial<Trip> & { id: string }));
+    setTrips(tripsData.filter(trip => trip.title !== undefined) as Trip[]);
+  };
+
+  const handleAdd = async () => {
+    console.log(user?.uid);
+    console.log("Entered handleAdd");
+    if (user) {
+      console.log("Entered if");
+      const newTrip = { title: trip.title, date: trip.date, userId: user.uid };
+      const docRef = await addDoc(collection(db, "trips"), newTrip);
+      setTrips(prev => [...prev, { id: docRef.id, ...newTrip } as unknown as Trip]);
+      setTrip({ id: 0, title: "", date: new Date() });
+    }
   };
 
   const handleDelete = (id: number) => {

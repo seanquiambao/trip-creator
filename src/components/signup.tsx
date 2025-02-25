@@ -1,8 +1,11 @@
 "use client";
 import { useState } from "react";
 import { api } from "@/utils/api";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 const Signup = () => {
+  const router = useRouter();
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -15,10 +18,21 @@ const Signup = () => {
 
     try {
       await api({
-        url: "/api/signup",
         method: "POST",
+        url: "/api/signup",
         body: form,
-      });
+      })
+        .then((response) => {
+          if (response.message === "OK") {
+            router.push("/trip");
+          } else {
+            console.log(response.message);
+            throw new Error(response.message);
+          }
+        })
+        .catch((response) => {
+          toast.error(`Error: ${response.message}`);
+        });
     } catch {
       setError("Signup failed. Please try again.");
     }
