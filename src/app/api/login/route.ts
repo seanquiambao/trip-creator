@@ -1,7 +1,9 @@
-import { auth, db } from "@/utils/firebase";
+import { auth, db } from "@/utils/firebase-client";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { getDoc, doc } from "firebase/firestore";
 import { NextResponse } from "next/server";
+import admin from "firebase-admin";
+import { cookies } from "next/headers";
+
 export const POST = async (req: Request) => {
   const res = NextResponse;
   if (!auth || !db) {
@@ -15,16 +17,9 @@ export const POST = async (req: Request) => {
       email,
       password
     );
-    const user = userCredential.user;
-
-    const userDocRef = doc(db, "users", user.uid);
-    const userDoc = await getDoc(userDocRef);
-
-    if (!userDoc.exists()) {
-      console.log("Err");
-      return res.json({ message: "Incorrect email/password" }, { status: 400 });
-    }
-
+    const token = await userCredential.user.getIdToken(); // Get ID token
+    await admin.auth().verifyIdToken(token);
+    cookies().set("token", token, { httpOnly: true, secure: true, path: "/" });
     return res.json({ message: "OK" }, { status: 200 });
   } catch (err: unknown) {
     const errorCode = extractErrorCode(err);
@@ -35,7 +30,6 @@ export const POST = async (req: Request) => {
       );
     }
 
-    console.log("hello");
     return res.json(
       {
         message: `Internal Server Error: Contact Developers`,

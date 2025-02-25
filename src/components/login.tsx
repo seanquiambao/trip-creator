@@ -6,7 +6,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { setPersistence, browserLocalPersistence } from "firebase/auth";
-import { auth } from "@/utils/firebase";
+import { auth } from "@/utils/firebase-client";
 const Login = () => {
   const router = useRouter();
   const [form, setForm] = useState({

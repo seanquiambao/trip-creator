@@ -13,17 +13,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Trip } from "@/types/trip";
-import { db, auth } from "@/utils/firebase";
-import {
-  collection,
-  addDoc,
-  query,
-  where,
-  getDocs,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
-import { User, onAuthStateChanged } from "firebase/auth";
+import { api } from "@/utils/api";
+import { auth } from "@/utils/firebase-client";
+import { toast } from "react-hot-toast";
 
 const Page = () => {
   const [trips, setTrips] = useState<Trip[]>(TRIPS);
@@ -33,67 +25,62 @@ const Page = () => {
     date: new Date(),
   });
   const [popup, setPopup] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        console.log("Authenticated");
-        setUser(currentUser);
-        fetchTrips(currentUser.uid);
-      } else {
-        console.log("Error");
-        setUser(null);
-      }
-    });
-
-    return () => unsubscribe(); // Cleanup function
+    fetchTrips();
   }, []);
 
-  const fetchTrips = async (userId: string) => {
-    const q = query(collection(db, "trips"), where("userId", "==", userId));
-    const querySnapshot = await getDocs(q);
+  const fetchTrips = async () => {
+    const user = auth.currentUser;
+    const token = await user?.getIdToken(true); // Force token refresh
 
-    const tripsData = querySnapshot.docs.map((doc) => {
-      const data = doc.data();
-      return {
-        id: doc.id,
-        title: data.title,
-        date: data.date?.toDate(),
-        userId: data.userId,
-      } as Trip;
-    });
-
-    setTrips(tripsData.filter((trip) => trip.title !== undefined));
+    await api({
+      method: "GET",
+      url: "/api/trip",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        const tripsData = response.items;
+        setTrips(tripsData.filter((trip: Trip) => trip.title !== undefined));
+      })
+      .catch(() => {
+        toast.error("Failed to fetch");
+      });
   };
 
   const handleAdd = async () => {
-    console.log(user?.uid);
-    console.log("Entered handleAdd");
-    if (user) {
-      console.log("Entered if");
-      const newTrip = { title: trip.title, date: trip.date, userId: user.uid };
-      const docRef = await addDoc(collection(db, "trips"), newTrip);
+    const newTrip = { title: trip.title, date: trip.date };
+    await api({
+      method: "POST",
+      url: "/api/trip",
+      body: { newTrip },
+    }).then((response) => {
+      const items = response.items;
       setTrips((prev) => [
         ...prev,
-        { id: docRef.id, ...newTrip } as unknown as Trip,
+        { id: items.docRefId, ...newTrip } as unknown as Trip,
       ]);
       setTrip({ id: "", title: "", date: new Date() });
-    }
+    });
   };
 
   const handleDelete = async (id: string) => {
-    try {
-      await deleteDoc(doc(db, "trips", id));
+    await api({
+      method: "DELETE",
+      url: "/api/trip",
+      body: {
+        id: id,
+      },
+    }).then(() => {
       setTrips((prev) => prev.filter((trip) => trip.id !== id));
-      console.log(`Trip with ID ${id} deleted successfully`);
-    } catch (error) {
-      console.log(`Error deleting trip with ID ${id}`, error);
-    }
+    });
   };
   return (
     <div className="flex flex-col w-full p-6 gap-y-2">
       <div className="text-4xl font-bold">My Trips</div>
+      <div onClick={fetchTrips}>click</div>
       <div className="grid grid-cols-3 gap-2">
         {trips.map((trip, index) => (
           <TripCard
