@@ -27,7 +27,7 @@ export const GET = async (req: NextRequest) => {
     );
     console.log("query before");
     const querySnapshot = await getDocs(q);
-    console.log("query after");
+    console.log(querySnapshot.docs);
 
     const tripsData = querySnapshot.docs.map((doc) => {
       const data = doc.data();
@@ -63,7 +63,17 @@ export const POST = async (req: NextRequest) => {
   const res = NextResponse;
   const body = await req.json();
   try {
-    const docRef = await addDoc(collection(db, "trips"), body);
+    const token = req.headers.get("authorization")?.split(" ")[1];
+    if (!token) {
+      return res.json({ message: "No token provided." }, { status: 401 });
+    }
+    const decodedToken = await authenticate(token);
+
+    const docRef = await addDoc(collection(db, "trips"), {
+      ...body,
+      userId: decodedToken.uid,
+      date: new Date(body.date),
+    });
 
     return res.json(
       { message: "OK", items: { docRefId: docRef.id } },

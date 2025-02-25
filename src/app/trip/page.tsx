@@ -18,7 +18,7 @@ import { auth } from "@/utils/firebase-client";
 import { toast } from "react-hot-toast";
 
 const Page = () => {
-  const [trips, setTrips] = useState<Trip[]>(TRIPS);
+  const [trips, setTrips] = useState<Trip[]>([]);
   const [trip, setTrip] = useState<Trip>({
     id: "",
     title: "",
@@ -43,7 +43,19 @@ const Page = () => {
     })
       .then((response) => {
         const tripsData = response.items;
-        setTrips(tripsData.filter((trip: Trip) => trip.title !== undefined));
+        if (tripsData.length <= 0) {
+          return;
+        }
+
+        const tripsWithDates = tripsData.map((trip: Trip) => {
+          if (typeof trip.date === "string") {
+            trip.date = new Date(trip.date); // Convert to Date object
+          }
+          return trip;
+        });
+        setTrips(
+          tripsWithDates.filter((trip: Trip) => trip.title !== undefined)
+        );
       })
       .catch(() => {
         toast.error("Failed to fetch");
@@ -52,10 +64,15 @@ const Page = () => {
 
   const handleAdd = async () => {
     const newTrip = { title: trip.title, date: trip.date };
+    const user = auth.currentUser;
+    const token = await user?.getIdToken(true); // Force token refresh
     await api({
       method: "POST",
       url: "/api/trip",
-      body: { newTrip },
+      body: { title: trip.title, date: trip.date },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }).then((response) => {
       const items = response.items;
       setTrips((prev) => [
