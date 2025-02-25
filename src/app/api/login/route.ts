@@ -34,6 +34,8 @@ export const POST = async (req: Request) => {
         { status: 401 }
       );
     }
+
+    console.log("hello");
     return res.json(
       {
         message: `Internal Server Error: Contact Developers`,

@@ -3,9 +3,9 @@ import Link from "next/link";
 
 interface props {
   title: string;
-  id: number;
+  id: string;
   date: Date;
-  handleDelete: (id: number) => void;
+  handleDelete: (id: string) => void;
 }
 
 const TripCard = ({ id, title, date, handleDelete }: props) => {
@@ -23,7 +23,7 @@ const TripCard = ({ id, title, date, handleDelete }: props) => {
         {title}
       </Link>
 
-      <div className="text-gray-600 mb-1">{date.toDateString()}</div>
+      <div className="text-gray-600 mb-1">{date.toLocaleDateString()}</div>
     </div>
   );
 };
