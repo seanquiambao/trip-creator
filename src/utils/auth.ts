@@ -1,5 +1,4 @@
 // utils/auth-server.ts
-import admin from "firebase-admin";
 import { authAdmin } from "./firebase-admin";
 
 // Initialize Firebase Admin SDK once

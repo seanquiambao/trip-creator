@@ -11,7 +11,6 @@ import {
 } from "firebase/firestore";
 import { Trip } from "@/types/trip";
 import { db } from "@/utils/firebase-client";
-import { authAdmin } from "@/utils/firebase-admin";
 export const GET = async (req: NextRequest) => {
   const res = NextResponse;
 
