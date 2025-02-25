@@ -14,7 +14,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { Trip } from "@/types/trip";
 import { db, auth } from "@/utils/firebase";
-import { collection, addDoc, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { User, onAuthStateChanged } from "firebase/auth";
 
 const Page = () => {
@@ -75,15 +83,13 @@ const Page = () => {
   };
 
   const handleDelete = async (id: string) => {
-    try{
+    try {
       await deleteDoc(doc(db, "trips", id));
       setTrips((prev) => prev.filter((trip) => trip.id !== id));
       console.log(`Trip with ID ${id} deleted successfully`);
-    }
-    catch (error){
+    } catch (error) {
       console.log(`Error deleting trip with ID ${id}`, error);
     }
-    
   };
   return (
     <div className="flex flex-col w-full p-6 gap-y-2">
