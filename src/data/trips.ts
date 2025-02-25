@@ -2,22 +2,22 @@ import { Trip, Day } from "@/types/trip";
 
 export const TRIPS: Trip[] = [
   {
-    id: 1,
+    id: "a",
     title: "San Diego Trip",
     date: new Date(11, 25, 25),
   },
   {
-    id: 2,
+    id: "b",
     title: "San Diego Trip",
     date: new Date(11, 25, 25),
   },
   {
-    id: 3,
+    id: "c",
     title: "San Diego Trip",
     date: new Date(11, 25, 25),
   },
   {
-    id: 4,
+    id: "d",
     title: "San Diego Trip",
     date: new Date(11, 25, 25),
   },

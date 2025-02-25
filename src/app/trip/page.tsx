@@ -14,13 +14,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Trip } from "@/types/trip";
 import { db, auth } from "@/utils/firebase";
-import { collection, addDoc, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { User, onAuthStateChanged } from "firebase/auth";
 
 const Page = () => {
   const [trips, setTrips] = useState<Trip[]>(TRIPS);
   const [trip, setTrip] = useState<Trip>({
-    id: 0,
+    id: "",
     title: "",
     date: new Date(),
   });
@@ -45,8 +45,18 @@ const Page = () => {
   const fetchTrips = async (userId: string) => {
     const q = query(collection(db, "trips"), where("userId", "==", userId));
     const querySnapshot = await getDocs(q);
-    const tripsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Partial<Trip> & { id: string }));
-    setTrips(tripsData.filter(trip => trip.title !== undefined) as Trip[]);
+
+    const tripsData = querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        title: data.title,
+        date: data.date?.toDate(),
+        userId: data.userId,
+      } as Trip;
+    });
+
+    setTrips(tripsData.filter((trip) => trip.title !== undefined));
   };
 
   const handleAdd = async () => {
@@ -56,12 +66,15 @@ const Page = () => {
       console.log("Entered if");
       const newTrip = { title: trip.title, date: trip.date, userId: user.uid };
       const docRef = await addDoc(collection(db, "trips"), newTrip);
-      setTrips(prev => [...prev, { id: docRef.id, ...newTrip } as unknown as Trip]);
-      setTrip({ id: 0, title: "", date: new Date() });
+      setTrips((prev) => [
+        ...prev,
+        { id: docRef.id, ...newTrip } as unknown as Trip,
+      ]);
+      setTrip({ id: "", title: "", date: new Date() });
     }
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     const filteredTrips = trips.filter((item) => item.id !== id);
     setTrips(filteredTrips);
   };
