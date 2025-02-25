@@ -1,7 +1,6 @@
 "use client";
 import TripCard from "@/components/trip/trip-card";
 import AddCard from "@/components/trip/add-card";
-import { TRIPS } from "@/data/trips";
 import { useEffect, useState } from "react";
 import {
   AlertDialog,
