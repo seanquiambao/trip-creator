@@ -30,16 +30,16 @@ const Page = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
+        console.log("Authenticated");
         setUser(currentUser);
         fetchTrips(currentUser.uid);
-        console.log("User is authenticated:", currentUser);
       } else {
+        console.log("Error");
         setUser(null);
-        console.log("User is not authenticated");
       }
     });
 
-    return () => unsubscribe();
+    return () => unsubscribe(); // Cleanup function
   }, []);
 
   const fetchTrips = async (userId: string) => {

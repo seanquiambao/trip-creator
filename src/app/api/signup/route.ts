@@ -18,7 +18,11 @@ export const POST = async (req: Request) => {
     const user = userCredential.user;
 
     // Store user data in Firestore
-    await setDoc(doc(db, "users", user.uid), { username });
+    await setDoc(doc(db, "users", user.uid), {
+      username,
+      email,
+      uid: user.uid,
+    });
 
     return res.json({ message: "OK" }, { status: 200 });
   } catch (err) {

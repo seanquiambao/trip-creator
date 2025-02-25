@@ -2,9 +2,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { api } from "@/utils/api";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
+import { setPersistence, browserLocalPersistence } from "firebase/auth";
+import { auth } from "@/utils/firebase";
 const Login = () => {
   const router = useRouter();
   const [form, setForm] = useState({
@@ -14,19 +16,11 @@ const Login = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    await setPersistence(auth, browserLocalPersistence);
 
-    await api({
-      method: "POST",
-      url: "/api/login",
-      body: form,
-    })
+    await signInWithEmailAndPassword(auth, form.email, form.password)
       .then((response) => {
-        if (response.message === "OK") {
-          router.push("/trip");
-        } else {
-          console.log(response.message);
-          throw new Error(response.message);
-        }
+        router.push("/trip");
       })
       .catch((response) => {
         toast.error(`Error: ${response.message}`);
