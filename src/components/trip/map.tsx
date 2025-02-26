@@ -73,7 +73,7 @@ const Map = ({ days, setDays }: props) => {
 
   return (
     <LoadScript
-      googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API || ""}
+      googleMapsApiKey={process.env.GOOGLE_MAPS_API || ""}
       libraries={libraries}
     >
       <div className="relative w-1/2">

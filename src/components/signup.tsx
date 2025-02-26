@@ -24,7 +24,7 @@ const Signup = () => {
       })
         .then((response) => {
           if (response.message === "OK") {
-            router.push("/trip");
+            router.push("/");
           } else {
             console.log(response.message);
             throw new Error(response.message);
