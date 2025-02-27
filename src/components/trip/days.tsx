@@ -32,7 +32,7 @@ const Days = ({ days, setDays }: Props) => {
       activities: sortActivitiesByTime([...day.activities]),
     }));
     setDays(sortedDays);
-  }, [setDays, days]);
+  }, [setDays]);
 
   const handleRemoveDay = (indexToRemove: number) => {
     const filteredDays = days.filter((_, index) => index !== indexToRemove);
@@ -73,17 +73,23 @@ const Days = ({ days, setDays }: Props) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-4 p-4 w-full">
+          <div className="gap-4 p-4 w-full grid">
             <hr className="border-white/20 mb-2" />
-            {day.activities.map((activity, idx) => (
-              <Activity
-                key={idx}
-                title={activity.title}
-                time={activity.time}
-                location={activity.location}
-                cost={activity.cost}
-              />
-            ))}
+            {day.activities.length > 0 ? (
+              day.activities.map((activity, idx) => (
+                <Activity
+                  key={idx}
+                  title={activity.title}
+                  time={activity.time}
+                  location={activity.location}
+                  cost={activity.cost}
+                />
+              ))
+            ) : (
+              <div className="font-bold text-white/20 text-2xl text-center">
+                No Activities
+              </div>
+            )}
           </div>
         </div>
       ))}
