@@ -32,6 +32,18 @@ const Days = ({ days, setDays }: props) => {
     setDays(sortedDays);
   }, [setDays]);
 
+  const handleDelete = (dayKey: number, activityKey: number): void => {
+    const updatedDays = [...days];
+    const dayIndex = updatedDays.findIndex((day) => day.day === dayKey) + 1;
+    console.log("dayIndex: ", dayIndex, "Daykey: ", dayKey);
+    if (dayIndex == dayKey) {
+      updatedDays[dayIndex].activities = updatedDays[
+        dayIndex
+      ].activities.filter((_, index) => index !== activityKey);
+      setDays(updatedDays);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 w-full">
       {days.map((day, index) => (
@@ -58,10 +70,13 @@ const Days = ({ days, setDays }: props) => {
             {day.activities.map((activity, idx) => (
               <Activity
                 key={idx}
+                activityKey={idx}
                 title={activity.title}
                 time={activity.time}
                 location={activity.location}
                 cost={activity.cost}
+                dayKey={index}
+                handleDelete={handleDelete}
               />
             ))}
           </div>
@@ -72,3 +87,12 @@ const Days = ({ days, setDays }: props) => {
 };
 
 export default Days;
+
+//
+/*
+
+{
+daykey: 2,
+activitykey: 3
+}
+*/
