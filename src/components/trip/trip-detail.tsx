@@ -1,22 +1,24 @@
-import { PopoverContent } from "@radix-ui/react-popover";
-import { Popover, PopoverTrigger } from "../ui/popover";
-import { Calendar } from "../ui/calendar";
+import { Calendar, DollarSign } from "lucide-react";
+
 type props = {
   title: string;
   date: Date;
+  budget: number;
 };
-const TripDetail = ({ title, date }: props) => {
+const TripDetail = ({ title, date, budget }: props) => {
   return (
-    <div className="flex flex-col gap-4 items-start">
-      <div className="text-white font-bold text-6xl">{title}</div>
-      <Popover>
-        <PopoverTrigger className="text-white font-bold text-4xl rounded-md border-white/25 border p-4">
-          {date.toLocaleDateString()}
-        </PopoverTrigger>
-        <PopoverContent>
-          <Calendar className="bg-white rounded-md" initialFocus />
-        </PopoverContent>
-      </Popover>
+    <div className="flex flex-row gap-4 items-start pb-10">
+      <div className="text-white font-bold text-6xl w-full">{title}</div>
+      <div className="flex flex-col w-full gap-2 self-center">
+        <div className="text-white opacity-50 inline-flex text-2xl gap-4 items-center">
+          <Calendar />
+          {date.toDateString()}
+        </div>
+        <div className="text-white opacity-50 inline-flex text-2xl gap-4 items-center">
+          <DollarSign />
+          {budget}
+        </div>
+      </div>
     </div>
   );
 };

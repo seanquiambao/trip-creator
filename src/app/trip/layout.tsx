@@ -4,9 +4,9 @@ type LayoutProps = {
 };
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-screen overflow-hidden">
       <Navigation />
-      {children}
+      <div className="flex-1 overflow-hidden">{children}</div>
     </div>
   );
 };

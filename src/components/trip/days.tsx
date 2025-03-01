@@ -37,7 +37,6 @@ const Days = ({ days, setDays }: Props) => {
   const handleDelete = (dayKey: number, activityKey: number): void => {
     const updatedDays = [...days];
     const dayIndex = updatedDays.findIndex((day) => day.day === dayKey) + 1;
-    console.log("dayIndex: ", dayIndex, "Daykey: ", dayKey);
     if (dayIndex == dayKey) {
       updatedDays[dayIndex].activities = updatedDays[
         dayIndex
@@ -64,49 +63,57 @@ const Days = ({ days, setDays }: Props) => {
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      {days.map((day, index) => (
-        <div key={index} className="flex flex-row text-white w-full">
-          <div className="flex flex-col items-center justify-center">
-            <div className="flex items-center gap-6">
-              <X
-                size={28}
-                className="cursor-pointer text-white hover:text-white/50"
-                onClick={() => handleRemoveDay(index)}
-              />
-              <div className="font-bold text-center">
-                <div className="text-5xl">DAY</div>
-                <div className="text-7xl">
-                  {day.day.toString().padStart(2, "0")}
-                </div>
-                <div className="text-white/20 text-2xl pt-4">
-                  {day.date.toLocaleDateString()}
+      {days.length > 0 ? (
+        days.map((day, index) => (
+          <div
+            key={index}
+            className="flex flex-row text-white w-full border-t border-white/25 items-center py-6"
+          >
+            <div className="flex flex-col items-center justify-center">
+              <div className="flex items-center gap-6">
+                <X
+                  size={28}
+                  className="cursor-pointer text-white hover:text-white/50"
+                  onClick={() => handleRemoveDay(index)}
+                />
+                <div className="font-bold text-center">
+                  <div className="text-5xl">DAY</div>
+                  <div className="text-7xl">
+                    {day.day.toString().padStart(2, "0")}
+                  </div>
+                  <div className="text-white/20 text-2xl pt-4">
+                    {day.date.toLocaleDateString()}
+                  </div>
                 </div>
               </div>
             </div>
+            <div className="gap-4 p-4 w-full grid">
+              {day.activities.length > 0 ? (
+                day.activities.map((activity, idx) => (
+                  <Activity
+                    key={idx}
+                    activityKey={idx}
+                    title={activity.title}
+                    time={activity.time}
+                    location={activity.location}
+                    cost={activity.cost}
+                    dayKey={index}
+                    handleDelete={handleDelete}
+                  />
+                ))
+              ) : (
+                <div className="font-bold text-white/20 text-2xl text-center">
+                  No Activities
+                </div>
+              )}
+            </div>
           </div>
-          <div className="gap-4 p-4 w-full grid">
-            <hr className="border-white/20 mb-2" />
-            {day.activities.length > 0 ? (
-              day.activities.map((activity, idx) => (
-                <Activity
-                  key={idx}
-                  activityKey={idx}
-                  title={activity.title}
-                  time={activity.time}
-                  location={activity.location}
-                  cost={activity.cost}
-                  dayKey={index}
-                  handleDelete={handleDelete}
-                />
-              ))
-            ) : (
-              <div className="font-bold text-white/20 text-2xl text-center">
-                No Activities
-              </div>
-            )}
-          </div>
+        ))
+      ) : (
+        <div className="font-bold text-white/20 text-2xl text-center p-5">
+          No Days
         </div>
-      ))}
+      )}
     </div>
   );
 };

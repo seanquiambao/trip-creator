@@ -8,12 +8,13 @@ import { useState, useRef } from "react";
 import { PlaceInfo, SelectedPlace } from "@/types/place";
 import PlaceModal from "./place-modal";
 import { Day } from "@/types/trip";
+import Loading from "../loading";
 
 const libraries: "places"[] = ["places"];
 
 const containerStyle = {
   width: "100%",
-  height: "90vh",
+  height: "100%",
 };
 
 const center = {
@@ -56,7 +57,6 @@ const Map = ({ days, setDays }: props) => {
 
   const fetchPlaceDetails = (placeId: string) => {
     if (!mapRef.current) {
-      console.log("OOPS");
       return;
     }
     const service = new window.google.maps.places.PlacesService(mapRef.current);
@@ -75,8 +75,9 @@ const Map = ({ days, setDays }: props) => {
     <LoadScript
       googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API || ""}
       libraries={libraries}
+      loadingElement={<Loading />}
     >
-      <div className="relative w-1/2">
+      <div className="relative w-full h-full">
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
           <StandaloneSearchBox
             onLoad={(ref) => (searchBoxRef.current = ref)}
@@ -86,7 +87,7 @@ const Map = ({ days, setDays }: props) => {
               ref={inputRef}
               type="text"
               placeholder="Search for a place"
-              className="w-96 p-3 rounded-lg border border-gray-300 shadow-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
+              className="w-96 p-3 rounded-lg border border-gray-300 shadow-md focus:ring-2 focus:ring-trip-navy focus:border-trip-navy outline-none bg-white"
             />
           </StandaloneSearchBox>
         </div>

@@ -26,7 +26,6 @@ const Signup = () => {
           if (response.message === "OK") {
             router.push("/");
           } else {
-            console.log(response.message);
             throw new Error(response.message);
           }
         })

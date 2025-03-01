@@ -26,9 +26,13 @@ const Page = () => {
   };
 
   return (
-    <div className="bg-trip-navy/90 flex flex-row items-center justify-between w-full h-fit">
-      <div className="self-start p-6 w-2/3 overflow-y-auto max-h-screen">
-        <TripDetail title="San Diego Trip 2025" date={new Date()} />
+    <div className="bg-trip-navy/90 flex flex-row items-start justify-between w-full h-full">
+      <div className="p-6 w-2/3 h-full overflow-y-auto">
+        <TripDetail
+          title="San Diego Trip 2025"
+          date={new Date()}
+          budget={200}
+        />
         <Days days={days} setDays={setDays} />
         <AddDay onAddDay={handleAddDay} />
       </div>

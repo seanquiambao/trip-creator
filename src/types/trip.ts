@@ -1,7 +1,7 @@
 export type Trip = {
   id: string;
   title: string;
-  date: Date;
+  date: Date | undefined;
 };
 
 export type Activity = {

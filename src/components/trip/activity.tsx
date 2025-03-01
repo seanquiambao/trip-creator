@@ -28,8 +28,6 @@ const Activity = ({
           size={20}
           className="cursor-pointer text-white hover:text-white/20"
           onClick={() => {
-            console.log("Daykey", dayKey);
-            console.log("Activity Key", activityKey);
             handleDelete(dayKey, activityKey);
           }}
         />

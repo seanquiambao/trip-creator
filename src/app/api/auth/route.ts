@@ -12,7 +12,6 @@ export const POST = async (req: NextRequest) => {
       return res.json({ message: "No token provided." }, { status: 401 });
     }
     const decodedToken = await admin.auth().verifyIdToken(token);
-    console.log("DECODED:", decodedToken);
     return res.json(
       { items: { uid: decodedToken.uid, email: decodedToken.email } },
       { status: 200 }

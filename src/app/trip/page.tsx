@@ -15,13 +15,15 @@ import { Trip } from "@/types/trip";
 import { api } from "@/utils/api";
 import { auth } from "@/utils/firebase-client";
 import { toast } from "react-hot-toast";
+import { Label } from "@/components/ui/label";
+import SelectCalendar from "@/components/global/select-calendar";
 
 const Page = () => {
   const [trips, setTrips] = useState<Trip[]>([]);
   const [trip, setTrip] = useState<Trip>({
     id: "",
     title: "",
-    date: new Date(),
+    date: undefined,
   });
   const [popup, setPopup] = useState(false);
 
@@ -96,7 +98,6 @@ const Page = () => {
   return (
     <div className="flex flex-col w-full p-6 gap-y-2">
       <div className="text-4xl font-bold">My Trips</div>
-      <div onClick={fetchTrips}>click</div>
       <div className="grid grid-cols-3 gap-2">
         {trips.map((trip, index) => (
           <TripCard
@@ -114,12 +115,15 @@ const Page = () => {
           <AlertDialogHeader>
             <AlertDialogTitle>Add a Trip</AlertDialogTitle>
           </AlertDialogHeader>
+          <Label>Trip Name</Label>
           <Input
             placeholder="title"
             onChange={(e) =>
               setTrip((prev) => ({ ...prev, title: e.target.value }))
             }
           />
+          <Label>Date</Label>
+          <SelectCalendar trip={trip} setTrip={setTrip} />
           <AlertDialogCancel onClick={() => setPopup(false)}>
             Cancel
           </AlertDialogCancel>
