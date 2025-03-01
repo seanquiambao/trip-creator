@@ -8,7 +8,7 @@ import { DAYS } from "@/data/trips";
 import AddDay from "@/components/trip/add-day";
 
 const Page = () => {
-  const [days, setDays] = useState<Day[]>([]);
+  const [days, setDays] = useState<Day[]>(DAYS);
 
   const handleAddDay = () => {
     const lastDay = days[days.length - 1];
