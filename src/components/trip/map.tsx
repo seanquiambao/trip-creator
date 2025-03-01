@@ -8,6 +8,7 @@ import { useState, useRef } from "react";
 import { PlaceInfo, SelectedPlace } from "@/types/place";
 import PlaceModal from "./place-modal";
 import { Day } from "@/types/trip";
+import Loading from "../loading";
 
 const libraries: "places"[] = ["places"];
 
@@ -75,6 +76,7 @@ const Map = ({ days, setDays }: props) => {
     <LoadScript
       googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API || ""}
       libraries={libraries}
+      loadingElement={<Loading />}
     >
       <div className="relative w-1/2">
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
