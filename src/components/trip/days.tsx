@@ -37,7 +37,6 @@ const Days = ({ days, setDays }: Props) => {
   const handleDelete = (dayKey: number, activityKey: number): void => {
     const updatedDays = [...days];
     const dayIndex = updatedDays.findIndex((day) => day.day === dayKey) + 1;
-    console.log("dayIndex: ", dayIndex, "Daykey: ", dayKey);
     if (dayIndex == dayKey) {
       updatedDays[dayIndex].activities = updatedDays[
         dayIndex

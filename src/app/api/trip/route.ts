@@ -25,9 +25,7 @@ export const GET = async (req: NextRequest) => {
       collection(db, "trips"),
       where("userId", "==", decodedToken.uid)
     );
-    console.log("query before");
     const querySnapshot = await getDocs(q);
-    console.log(querySnapshot.docs);
 
     const tripsData = querySnapshot.docs.map((doc) => {
       const data = doc.data();

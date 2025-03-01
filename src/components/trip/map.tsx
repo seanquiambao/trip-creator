@@ -57,7 +57,6 @@ const Map = ({ days, setDays }: props) => {
 
   const fetchPlaceDetails = (placeId: string) => {
     if (!mapRef.current) {
-      console.log("OOPS");
       return;
     }
     const service = new window.google.maps.places.PlacesService(mapRef.current);
