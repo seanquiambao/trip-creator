@@ -16,8 +16,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>
-        {children} <Toaster />
+      <body
+        className={`flex flex-col min-h-screen ${poppins.className} overflow-hidden`}
+      >
+        <Toaster />
+        {children}
       </body>
     </html>
   );
