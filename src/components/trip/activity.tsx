@@ -2,13 +2,24 @@
 import { X, Clock, MapPin, DollarSign } from "lucide-react";
 
 interface ActivityProps {
+  activityKey: number;
+  dayKey: number;
   title: string;
   time: string;
   location: string;
   cost: number;
+  handleDelete: (dayKey: number, activityKey: number) => void;
 }
 
-const Activity = ({ title, time, location, cost }: ActivityProps) => {
+const Activity = ({
+  dayKey,
+  activityKey,
+  title,
+  time,
+  location,
+  cost,
+  handleDelete,
+}: ActivityProps) => {
   return (
     <div className="group relative p-4 flex flex-col gap-2 text-white w-full">
       <div className="flex flex-row justify-between">
@@ -16,7 +27,11 @@ const Activity = ({ title, time, location, cost }: ActivityProps) => {
         <X
           size={20}
           className="cursor-pointer text-white hover:text-white/20"
-          onClick={() => console.log("Hello world")}
+          onClick={() => {
+            console.log("Daykey", dayKey);
+            console.log("Activity Key", activityKey);
+            handleDelete(dayKey, activityKey);
+          }}
         />
       </div>
 

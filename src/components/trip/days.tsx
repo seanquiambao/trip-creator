@@ -34,6 +34,17 @@ const Days = ({ days, setDays }: Props) => {
     setDays(sortedDays);
   }, [setDays]);
 
+  const handleDelete = (dayKey: number, activityKey: number): void => {
+    const updatedDays = [...days];
+    const dayIndex = updatedDays.findIndex((day) => day.day === dayKey) + 1;
+    console.log("dayIndex: ", dayIndex, "Daykey: ", dayKey);
+    if (dayIndex == dayKey) {
+      updatedDays[dayIndex].activities = updatedDays[
+        dayIndex
+      ].activities.filter((_, index) => index !== activityKey);
+      setDays(updatedDays);
+    }
+  };
   const handleRemoveDay = (indexToRemove: number) => {
     const filteredDays = days.filter((_, index) => index !== indexToRemove);
 
@@ -79,10 +90,13 @@ const Days = ({ days, setDays }: Props) => {
               day.activities.map((activity, idx) => (
                 <Activity
                   key={idx}
+                  activityKey={idx}
                   title={activity.title}
                   time={activity.time}
                   location={activity.location}
                   cost={activity.cost}
+                  dayKey={index}
+                  handleDelete={handleDelete}
                 />
               ))
             ) : (
