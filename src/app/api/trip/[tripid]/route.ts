@@ -31,7 +31,7 @@ export const POST = async (req: NextRequest, { params }: props) => {
       return res.json({ message: "Insufficient Permissions" }, { status: 403 });
     }
 
-    const updatedDays = [...(docData.days || []), { events: [] }];
+    const updatedDays = [...(docData.days || []), { activities: [] }];
     await updateDoc(docRef, {
       days: updatedDays,
     });
@@ -73,9 +73,9 @@ export const PUT = async (req: NextRequest, { params }: props) => {
 
     const newDays = docData.days.map((day: Day, index: number) => {
       if (index === selectedDay) {
-        const old = day.events;
+        const old = day.activities;
 
-        day.events = [...old, activity];
+        day.activities = [...old, activity];
         return day;
       }
 
