@@ -49,7 +49,7 @@ const TripEditor = ({ tripid }: props) => {
         <Days days={days} setDays={setDays} />
         <AddDay onAddDay={handleAddDay} />
       </div>
-      <Map days={days} setDays={setDays} />
+      <Map days={days} setDays={setDays} tripid={tripid} />
     </>
   );
 };

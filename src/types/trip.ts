@@ -4,7 +4,7 @@ export type Trip = {
   date: Date | undefined;
 };
 
-export type Activity = {
+export type Event = {
   title: string;
   time: string;
   location: string;
@@ -14,5 +14,5 @@ export type Activity = {
 export type Day = {
   date: Date;
   day: number;
-  activities: Activity[];
+  events: Event[];
 };
