@@ -1,42 +1,13 @@
-"use client";
-import Days from "@/components/trip/days";
-import Map from "@/components/trip/map";
-import TripDetail from "@/components/trip/trip-detail";
-import { Day } from "@/types/trip";
-import { useState } from "react";
-import { DAYS } from "@/data/trips";
-import AddDay from "@/components/trip/add-day";
+import TripEditor from "@/components/trip/trip-editor";
 
-const Page = () => {
-  const [days, setDays] = useState<Day[]>(DAYS);
-
-  const handleAddDay = () => {
-    const lastDay = days[days.length - 1];
-    const newDate = lastDay
-      ? new Date(lastDay.date.getTime() + 24 * 60 * 60 * 1000)
-      : new Date();
-
-    const newDay: Day = {
-      day: days.length + 1,
-      date: newDate,
-      activities: [],
-    };
-
-    setDays([...days, newDay]);
-  };
-
+type props = {
+  params: Promise<{ tripid: string }>;
+};
+const Page = async ({ params }: props) => {
+  const { tripid } = await params;
   return (
     <div className="bg-trip-navy/90 flex flex-row items-start justify-between w-full h-full">
-      <div className="p-6 w-2/3 h-full overflow-y-auto">
-        <TripDetail
-          title="San Diego Trip 2025"
-          date={new Date()}
-          budget={200}
-        />
-        <Days days={days} setDays={setDays} />
-        <AddDay onAddDay={handleAddDay} />
-      </div>
-      <Map days={days} setDays={setDays} />
+      <TripEditor tripid={tripid} />
     </div>
   );
 };
