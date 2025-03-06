@@ -1,6 +1,8 @@
 import { X } from "lucide-react";
 import Activity from "./activity";
 import { Day } from "@/types/trip";
+import { useState } from "react";
+import mockData from "@/fixtures/mockDays.json";
 
 type props = {
   tripDate: Date;
@@ -9,27 +11,32 @@ type props = {
 };
 
 const Days = ({ tripDate, days, setDays }: props) => {
-  console.log("HELP", tripDate);
+  const [mockDays, setMockDays] = useState(mockData);
 
   const handleDelete = (dayKey: number, activityKey: number): void => {
-    const updatedDays = [...days];
-    const dayIndex = updatedDays.findIndex((day) => day.day === dayKey) + 1;
-    if (dayIndex == dayKey) {
-      updatedDays[dayIndex].activities = updatedDays[
-        dayIndex
-      ].activities.filter((_, index) => index !== activityKey);
-      setDays(updatedDays);
-    }
+    const updatedDays = mockDays.map((day, index) => {
+      if (index === dayKey) {
+        return {
+          ...day,
+          activities: day.activities.filter((_, idx) => idx !== activityKey),
+        };
+      }
+      return day;
+    });
+    setMockDays(updatedDays);
+    setDays(updatedDays);
   };
+
   const handleRemoveDay = (indexToRemove: number) => {
-    const filteredDays = days.filter((_, index) => index !== indexToRemove);
+    const filteredDays = mockDays.filter((_, index) => index !== indexToRemove);
+    setMockDays(filteredDays);
     setDays(filteredDays);
   };
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      {days?.length > 0 ? (
-        days.map((day, index) => (
+      {mockDays?.length > 0 ? (
+        mockDays.map((day, index) => (
           <div
             key={index}
             className="flex flex-row text-white w-full border-t border-white/25 items-center py-6"
@@ -39,6 +46,7 @@ const Days = ({ tripDate, days, setDays }: props) => {
                 <X
                   size={28}
                   className="cursor-pointer text-white hover:text-white/50"
+                  data-cy={`remove-day-${index}`}
                   onClick={() => handleRemoveDay(index)}
                 />
                 <div className="font-bold text-center">

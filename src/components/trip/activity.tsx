@@ -25,12 +25,13 @@ const Activity = ({
       <div className="flex flex-row justify-between">
         <div className="text-2xl font-bold">{title}</div>
         <X
-          size={20}
-          className="cursor-pointer text-white hover:text-white/20"
-          onClick={() => {
-            handleDelete(dayKey, activityKey);
-          }}
-        />
+        size={20}
+        className="cursor-pointer text-white hover:text-white/20"
+        data-cy={`remove-place-${activityKey}`} // Add this line
+        onClick={() => {
+          handleDelete(dayKey, activityKey);
+        }}
+      />
       </div>
 
       <div className="flex items-center gap-2 text-white/20 text-lg">
