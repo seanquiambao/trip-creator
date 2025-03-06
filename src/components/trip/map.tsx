@@ -1,7 +1,7 @@
 "use client";
 import {
   GoogleMap,
-  LoadScript,
+  LoadScriptNext,
   StandaloneSearchBox,
 } from "@react-google-maps/api";
 import { useState, useRef } from "react";
@@ -73,7 +73,7 @@ const Map = ({ days, setDays, tripid }: props) => {
   };
 
   return (
-    <LoadScript
+    <LoadScriptNext
       googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API || ""}
       libraries={libraries}
       loadingElement={<Loading />}
@@ -134,7 +134,7 @@ const Map = ({ days, setDays, tripid }: props) => {
           )}
         </GoogleMap>
       </div>
-    </LoadScript>
+    </LoadScriptNext>
   );
 };
 
