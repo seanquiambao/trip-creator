@@ -16,7 +16,7 @@ const TripEditor = ({ tripid }: props) => {
 
   const handleAddDay = async () => {
     const user = auth.currentUser;
-    const token = await user?.getIdToken(true); // Force token refresh
+    const token = await user?.getIdToken(true);
 
     await api({
       method: "POST",
@@ -75,7 +75,12 @@ const TripEditor = ({ tripid }: props) => {
           date={new Date()}
           budget={200}
         />
-        <Days tripDate={tripDate} days={days} setDays={setDays} />
+        <Days
+          tripDate={tripDate}
+          days={days}
+          setDays={setDays}
+          tripid={tripid}
+        />
         <AddDay onAddDay={handleAddDay} />
       </div>
       <Map days={days} setDays={setDays} tripid={tripid} />

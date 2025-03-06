@@ -1,17 +1,32 @@
 import { X } from "lucide-react";
 import Activity from "./activity";
 import { Day } from "@/types/trip";
+import { api } from "@/utils/api";
+import { auth } from "@/utils/firebase-client";
 
 type props = {
   tripDate: Date;
   days: Day[];
+  tripid: string;
   setDays: (value: Day[]) => void;
 };
 
-const Days = ({ tripDate, days, setDays }: props) => {
-  console.log("HELP", tripDate);
-
-  const handleDelete = (dayKey: number, activityKey: number): void => {
+const Days = ({ tripDate, days, setDays, tripid }: props) => {
+  const handleDelete = async (dayKey: number, activityKey: number) => {
+    const user = auth.currentUser;
+    const token = await user?.getIdToken(true);
+    await api({
+      method: "DELETE",
+      url: `/api/trip/${tripid}`,
+      body: {
+        type: "activities",
+        dayIndex: dayKey,
+        activitiesIndex: activityKey,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const updatedDays = [...days];
     const dayIndex = updatedDays.findIndex((day) => day.day === dayKey) + 1;
     if (dayIndex == dayKey) {
@@ -21,7 +36,17 @@ const Days = ({ tripDate, days, setDays }: props) => {
       setDays(updatedDays);
     }
   };
-  const handleRemoveDay = (indexToRemove: number) => {
+  const handleRemoveDay = async (indexToRemove: number) => {
+    const user = auth.currentUser;
+    const token = await user?.getIdToken(true);
+    await api({
+      method: "DELETE",
+      url: `/api/trip/${tripid}`,
+      body: { type: "days", dayIndex: indexToRemove },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const filteredDays = days.filter((_, index) => index !== indexToRemove);
     setDays(filteredDays);
   };
