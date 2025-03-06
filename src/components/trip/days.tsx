@@ -1,8 +1,6 @@
 import { X } from "lucide-react";
 import Activity from "./activity";
 import { Day } from "@/types/trip";
-import { useState } from "react";
-import mockData from "@/fixtures/mockDays.json";
 
 type props = {
   tripDate: Date;
@@ -11,10 +9,8 @@ type props = {
 };
 
 const Days = ({ tripDate, days, setDays }: props) => {
-  const [mockDays, setMockDays] = useState(mockData);
-
   const handleDelete = (dayKey: number, activityKey: number): void => {
-    const updatedDays = mockDays.map((day, index) => {
+    const updatedDays = days.map((day, index) => {
       if (index === dayKey) {
         return {
           ...day,
@@ -23,20 +19,19 @@ const Days = ({ tripDate, days, setDays }: props) => {
       }
       return day;
     });
-    setMockDays(updatedDays);
+
     setDays(updatedDays);
   };
 
   const handleRemoveDay = (indexToRemove: number) => {
-    const filteredDays = mockDays.filter((_, index) => index !== indexToRemove);
-    setMockDays(filteredDays);
+    const filteredDays = days.filter((_, index) => index !== indexToRemove);
     setDays(filteredDays);
   };
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      {mockDays?.length > 0 ? (
-        mockDays.map((day, index) => (
+      {days?.length > 0 ? (
+        days.map((day, index) => (
           <div
             key={index}
             className="flex flex-row text-white w-full border-t border-white/25 items-center py-6"

@@ -1,3 +1,4 @@
+// eslint-disable-next-line spaced-comment
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -35,3 +36,23 @@
 //     }
 //   }
 // }
+declare namespace Cypress {
+  interface Chainable {
+    fetch(options: { tripid: string }): Chainable<void>;
+  }
+}
+type props = {
+  tripid: string;
+};
+Cypress.Commands.add("fetch", ({ tripid }: props) => {
+  cy.intercept("GET", `/api/trip/${tripid}`, { fixture: `trip_A.json` }).as(
+    "GET"
+  );
+
+  cy.visit("/");
+  cy.get('[data-testid="email"]').type("test@gmail.com");
+  cy.get('[data-testid="password"]').type("password123");
+  cy.get('[data-testid="login"]').click();
+  cy.visit(`/trip/${tripid}`);
+  cy.wait("@GET");
+});
