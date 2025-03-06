@@ -25,9 +25,10 @@ const center = {
 type props = {
   days: Day[];
   setDays: (value: Day[]) => void;
+  tripid: string;
 };
 
-const Map = ({ days, setDays }: props) => {
+const Map = ({ days, setDays, tripid }: props) => {
   const mapRef = useRef<google.maps.Map | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<SelectedPlace | null>(
     null
@@ -122,6 +123,7 @@ const Map = ({ days, setDays }: props) => {
         >
           {selectedPlace && (
             <PlaceModal
+              tripid={tripid}
               selectedPlace={selectedPlace}
               setSelectedPlace={setSelectedPlace}
               days={days}
