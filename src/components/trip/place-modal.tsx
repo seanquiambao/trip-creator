@@ -92,7 +92,7 @@ const PlaceModal = ({
           <div className="flex flex-col gap-2 w-2/3">
             <Select
               meta={{
-                options: days.map((item) => "Day " + item.day),
+                options: days.map((_, index) => "Day " + (index + 1)),
                 placeholder: "Select Day",
               }}
               onChange={(value, index) => handleChange(value, index, "day")}
