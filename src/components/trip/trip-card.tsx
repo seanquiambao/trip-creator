@@ -17,7 +17,7 @@ const TripCard = ({ id, title, date, handleDelete }: props) => {
       <X
         onClick={() => handleDelete(id)}
         className="absolute top-2 right-2 cursor-pointer"
-        data-testid="remove-trip"
+        data-testid={`remove-trip-${id}`}
       />
       <Link className="text-4xl font-bold mb-2" href={`/trip/${id}`}>
         {title}

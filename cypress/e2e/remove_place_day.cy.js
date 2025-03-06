@@ -1,6 +1,6 @@
 describe("Remove Place and Remove Day", () => {
   beforeEach(() => {
-    cy.fetch({
+    cy.fetchTripCreator({
       tripid: "A",
     });
   });
