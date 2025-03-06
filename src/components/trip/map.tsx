@@ -77,6 +77,8 @@ const Map = ({ days, setDays, tripid }: props) => {
       googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API || ""}
       libraries={libraries}
       loadingElement={<Loading />}
+      onLoad={() => console.log("Map loaded sucessfully!")}
+      onError={(error) => console.error(error)}
     >
       <div className="relative w-full h-full">
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
@@ -99,7 +101,7 @@ const Map = ({ days, setDays, tripid }: props) => {
           zoom={10}
           onLoad={(googlemap) => {
             mapRef.current = googlemap;
-            google.maps.event.addListener(
+            window.google.maps.event.addListener(
               googlemap,
               "click",
               (event: google.maps.MapMouseEvent & { placeId?: string }) => {
