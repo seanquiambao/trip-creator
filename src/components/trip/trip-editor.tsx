@@ -25,7 +25,14 @@ const TripEditor = ({ tripid }: props) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (days.length <= 0) {
+    if (!days) {
+      setDays([
+        {
+          date: tripDate,
+          day: 1,
+          activities: [],
+        },
+      ]);
       return;
     }
     const lastDay = days[days.length - 1];
