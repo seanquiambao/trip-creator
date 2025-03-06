@@ -127,8 +127,33 @@ export const PUT = async (req: NextRequest, { params }: props) => {
 
 export const DELETE = async (req: NextRequest, { params }: props) => {
   const res = NextResponse;
+  const { type, dayIndex } = await req.json();
 
   try {
+    const token = req.headers.get("authorization")?.split(" ")[1];
+    if (!token) {
+      return res.json({ message: "No token provided." }, { status: 401 });
+    }
+    const decodedToken = await authenticate(token);
+
+    const docRef = doc(db, "trips", params.tripid);
+
+    const snapshot = await getDoc(docRef);
+
+    if (!snapshot.exists()) {
+      return res.json({ message: "Trip does not exist" }, { status: 404 });
+    }
+
+    const docData = snapshot.data();
+
+    if (docData.userId !== decodedToken.uid) {
+      return res.json({ message: "Insufficient Permissions" }, { status: 403 });
+    }
+
+    if (type === "trips") {
+    } else if (type === "events") {
+    }
+
     return res.json({ message: "OK" }, { status: 200 });
   } catch (error) {
     return res.json({ message: "Internal Server Error" }, { status: 500 });
