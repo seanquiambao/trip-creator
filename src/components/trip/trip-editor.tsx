@@ -81,6 +81,19 @@ const TripEditor = ({ tripid }: props) => {
   useEffect(() => {
     handleFetch();
   }, []);
+
+  useEffect(() => {
+    if (!days || !Array.isArray(days)) return;
+    const totalBudget = days.reduce((acc, day) => {
+      const dayTotal = (day.activities || []).reduce(
+        (sum, activity) => sum + (activity.cost || 0),
+        0
+      );
+      return acc + dayTotal;
+    }, 0);
+    setTripBudget(totalBudget);
+  }, [days]);
+  
   return (
     <>
       <div className="p-6 w-2/3 h-full overflow-y-auto">
