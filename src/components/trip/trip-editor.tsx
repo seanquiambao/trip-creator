@@ -93,7 +93,7 @@ const TripEditor = ({ tripid }: props) => {
     }, 0);
     setTripBudget(totalBudget);
   }, [days]);
-  
+
   return (
     <>
       <div className="p-6 w-2/3 h-full overflow-y-auto">
