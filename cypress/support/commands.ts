@@ -59,7 +59,9 @@ Cypress.Commands.add("fetchTripCreator", ({ tripid }: props) => {
 });
 
 Cypress.Commands.add("fetchTrip", ({ tripid }: props) => {
-  cy.intercept("GET", `/api/trip`, { fixture: `trip_A.json` }).as("GET");
+  cy.intercept("GET", `/api/trip`, { fixture: `trip_dashboard_A.json` }).as(
+    "GET"
+  );
 
   cy.visit("/");
   cy.get('[data-testid="email"]').type("test@gmail.com");
