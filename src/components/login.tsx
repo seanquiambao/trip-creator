@@ -14,6 +14,20 @@ const Login = () => {
     password: "",
   });
 
+  const getErrorMessages = (errorCode: string) => {
+    const errorMessages: { [key: string]: string } = {
+      "auth/invalid-credential": "Invalid email or password. Please try again.",
+      "auth/user-not-found": "Invalid email or password. Please try again.",
+      "auth/wrong-password": "Invalid email or password. Please try again.",
+      "auth/too-many-requests": "Too many failed attempts. Try again later.",
+      "auth/network-request-failed":
+        "Network error. Please check your connection.",
+      "auth/internal-error":
+        "An unexpected error occurred. Please try again later.",
+    };
+    return errorMessages[errorCode] || "Login failed. Please try again later.";
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     await setPersistence(auth, browserLocalPersistence);
@@ -22,8 +36,9 @@ const Login = () => {
       .then((response) => {
         router.push("/trip");
       })
-      .catch((response) => {
-        toast.error(`Error: ${response.message}`);
+      .catch((error) => {
+        const errorMessage = getErrorMessages(error.code);
+        toast.error(errorMessage);
       });
   };
 
