@@ -70,7 +70,7 @@ const TripEditor = ({ tripid }: props) => {
       const totalBudget =
         data.days?.reduce((acc: number, day: any) => {
           const dayTotal = day.activities?.reduce(
-            (sum: number, activity: any) => sum + (activity.price || 0),
+            (sum: number, activity: any) => sum + (activity.cost || 0),
             0
           );
           return acc + dayTotal;
