@@ -8,7 +8,7 @@ describe("Remove Place and Remove Day", () => {
     cy.wait(1000);
 
     // Get the initial length of activities
-    cy.get('[data-cy^="remove-place-0"]').then(($elements) => {
+    cy.get('[data-cy^="remove-place-"]').then(($elements) => {
       const initialLength = $elements.length;
 
       // Click the first remove button
@@ -18,7 +18,7 @@ describe("Remove Place and Remove Day", () => {
         .click();
 
       // Verify the length of activities is reduced by one
-      cy.get('[data-cy^="remove-place-0"]').should(
+      cy.get('[data-cy^="remove-place-"]').should(
         "have.length",
         initialLength - 1
       );
@@ -29,7 +29,7 @@ describe("Remove Place and Remove Day", () => {
     cy.wait(1000);
 
     // Get the initial length of activities
-    cy.get('[data-cy^="remove-day-0"]').then(($elements) => {
+    cy.get('[data-cy^="remove-day-"]').then(($elements) => {
       const initialLength = $elements.length;
 
       // Click the first remove button
@@ -39,7 +39,7 @@ describe("Remove Place and Remove Day", () => {
         .click();
 
       // Verify the length of activities is reduced by one
-      cy.get('[data-cy^="remove-day-0"]').should(
+      cy.get('[data-cy^="remove-day-"]').should(
         "have.length",
         initialLength - 1
       );
