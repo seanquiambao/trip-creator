@@ -64,6 +64,7 @@ const Days = ({ tripDate, days, setDays, tripid }: props) => {
                 <X
                   size={28}
                   className="cursor-pointer text-white hover:text-white/50"
+                  data-cy={`remove-day-${index}`}
                   onClick={() => handleRemoveDay(index)}
                 />
                 <div className="font-bold text-center">

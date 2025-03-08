@@ -27,6 +27,7 @@ const Activity = ({
         <X
           size={20}
           className="cursor-pointer text-white hover:text-white/20"
+          data-cy={`remove-place-${activityKey}`} // Add this line
           onClick={() => {
             handleDelete(dayKey, activityKey);
           }}

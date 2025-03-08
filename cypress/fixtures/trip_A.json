@@ -1,0 +1,44 @@
+{
+  "message": "OK",
+  "items": {
+    "id": "B",
+    "title": "San Diego Trip",
+    "date": "2025-12-11",
+    "days": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "title": "Ono Hawaiian BBQ",
+            "time": "8 PM",
+            "location": "1000 Main St.",
+            "cost": 100
+          },
+          {
+            "title": "Atlantic Beach Newport Hotel",
+            "time": "5 PM",
+            "location": "10900 Albany St.",
+            "cost": 100
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "title": "Atlantic Beach Newport Hotel",
+            "time": "5 PM",
+            "location": "10900 Albany St.",
+            "cost": 100
+          },
+          {
+            "title": "Ono Hawaiian BBQ",
+            "time": "8 PM",
+            "location": "1000 Main St.",
+            "cost": 100
+          }
+        ]
+      }
+    ]
+  }
+}
