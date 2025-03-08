@@ -13,10 +13,12 @@ type props = {
 const TripEditor = ({ tripid }: props) => {
   const [days, setDays] = useState<Day[]>([]);
   const [tripDate, setTripDate] = useState<Date>(new Date());
+  const [tripTitle, setTripTitle] = useState<string>("");
+  const [tripBudget, setTripBudget] = useState<number>(0);
 
   const handleAddDay = async () => {
     const user = auth.currentUser;
-    const token = await user?.getIdToken(true); // Force token refresh
+    const token = await user?.getIdToken(true);
 
     await api({
       method: "POST",
@@ -60,22 +62,52 @@ const TripEditor = ({ tripid }: props) => {
       },
     }).then((response) => {
       const data = response.items;
-      setTripDate(new Date(data.date));
+      const tripDate = data.date ? new Date(data.date) : null;
+      setTripDate(tripDate ?? new Date());
       setDays(data.days);
+      setTripTitle(data.title);
+
+      const totalBudget =
+        data.days?.reduce((acc: number, day: any) => {
+          const dayTotal = day.activities?.reduce(
+            (sum: number, activity: any) => sum + (activity.cost || 0),
+            0
+          );
+          return acc + dayTotal;
+        }, 0) || 0;
+      setTripBudget(totalBudget);
     });
   };
   useEffect(() => {
     handleFetch();
   }, []);
+
+  useEffect(() => {
+    if (!days || !Array.isArray(days)) return;
+    const totalBudget = days.reduce((acc, day) => {
+      const dayTotal = (day.activities || []).reduce(
+        (sum, activity) => sum + (activity.cost || 0),
+        0
+      );
+      return acc + dayTotal;
+    }, 0);
+    setTripBudget(totalBudget);
+  }, [days]);
+
   return (
     <>
       <div className="p-6 w-2/3 h-full overflow-y-auto">
         <TripDetail
-          title="San Diego Trip 2025"
-          date={new Date()}
-          budget={200}
+          title={tripTitle || "Loading..."}
+          date={tripDate || new Date()}
+          budget={tripBudget}
         />
-        <Days tripDate={tripDate} days={days} setDays={setDays} />
+        <Days
+          tripDate={tripDate}
+          days={days}
+          setDays={setDays}
+          tripid={tripid}
+        />
         <AddDay onAddDay={handleAddDay} />
       </div>
       <Map days={days} setDays={setDays} tripid={tripid} />
