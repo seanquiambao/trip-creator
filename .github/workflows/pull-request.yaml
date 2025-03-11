@@ -32,8 +32,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build
-          path: .next
-          retention-days: 1
+          path: ./.next
+          retention-days:
+          if-no-files-found: error1
 
     env:
       FIREBASE_API_KEY: ${{secrets.FIREBASE_API_KEY}}
