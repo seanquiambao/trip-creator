@@ -28,6 +28,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: acm-ucr/build@v2
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: .next
+          retention-days: 1
 
     env:
       FIREBASE_API_KEY: ${{secrets.FIREBASE_API_KEY}}
