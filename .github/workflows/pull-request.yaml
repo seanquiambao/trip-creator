@@ -34,7 +34,7 @@ jobs:
           name: build
           path: ./.next
           retention-days:
-          if-no-files-found: error1
+          if-no-files-found: error
 
     env:
       FIREBASE_API_KEY: ${{secrets.FIREBASE_API_KEY}}
