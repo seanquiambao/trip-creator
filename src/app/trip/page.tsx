@@ -117,6 +117,7 @@ const Page = () => {
           </AlertDialogHeader>
           <Label>Trip Name</Label>
           <Input
+            data-testid="title-input"
             placeholder="title"
             onChange={(e) =>
               setTrip((prev) => ({ ...prev, title: e.target.value }))
