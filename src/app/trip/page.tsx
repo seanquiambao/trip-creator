@@ -96,9 +96,9 @@ const Page = () => {
     });
   };
   return (
-    <div className="flex flex-col w-full p-6 gap-y-2">
-      <div className="text-4xl font-bold">My Trips</div>
-      <div className="grid grid-cols-3 gap-2">
+    <div className="flex flex-col w-full p-6">
+      <h1 className="text-4xl font-bold mb-6">My Trips</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {trips.map((trip, index) => (
           <TripCard
             key={index}
