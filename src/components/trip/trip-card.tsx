@@ -1,25 +1,25 @@
 import { X } from "lucide-react";
 import Link from "next/link";
 
-interface props {
+interface Props {
   title: string;
   id: string;
   date: Date | undefined;
   handleDelete: (id: string) => void;
 }
 
-const TripCard = ({ id, title, date, handleDelete }: props) => {
+const TripCard = ({ id, title, date, handleDelete }: Props) => {
   return (
     <div
-      className="rounded-2xl relative shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-200 block"
+      className="rounded-lg relative shadow-md p-4 hover:shadow-lg transition-shadow duration-300 border border-gray-200 w-full"
       data-testid="trip-card"
     >
       <X
         onClick={() => handleDelete(id)}
-        className="absolute top-2 right-2 cursor-pointer"
+        className="absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-red-500 transition-colors duration-200"
         data-testid={`remove-trip-${id}`}
       />
-      <Link className="text-4xl font-bold mb-2" href={`/trip/${id}`}>
+      <Link className="text-3xl md:text-4xl font-bold mb-2 block" href={`/trip/${id}`}>
         {title}
       </Link>
 
