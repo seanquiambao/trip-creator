@@ -29,13 +29,14 @@ const Days = ({ tripDate, days, setDays, tripid }: props) => {
     });
     const updatedDays = [...days];
     const dayIndex = updatedDays.findIndex((day) => day.day === dayKey) + 1;
-    if (dayIndex == dayKey) {
+    if (dayIndex === dayKey) {
       updatedDays[dayIndex].activities = updatedDays[
         dayIndex
       ].activities.filter((_, index) => index !== activityKey);
       setDays(updatedDays);
     }
   };
+
   const handleRemoveDay = async (indexToRemove: number) => {
     const user = auth.currentUser;
     const token = await user?.getIdToken(true);
@@ -57,19 +58,20 @@ const Days = ({ tripDate, days, setDays, tripid }: props) => {
         days.map((day, index) => (
           <div
             key={index}
-            className="flex flex-row text-white w-full border-t border-white/25 items-center py-6"
+            className="relative flex flex-col md:flex-row text-white w-full border-t border-white/25 items-center py-6"
           >
-            <div className="flex flex-col items-center justify-center">
+            <X
+              size={28}
+              className="absolute top-1 right-0 cursor-pointer text-white hover:text-white/50"
+              data-cy={`remove-day-${index}`}
+              onClick={() => handleRemoveDay(index)}
+            />
+            <div className="flex flex-col items-center justify-center w-full">
               <div className="flex items-center gap-6">
-                <X
-                  size={28}
-                  className="cursor-pointer text-white hover:text-white/50"
-                  data-cy={`remove-day-${index}`}
-                  onClick={() => handleRemoveDay(index)}
-                />
                 <div className="font-bold text-center">
-                  <div className="text-5xl">DAY</div>
-                  <div className="text-7xl">
+                  <div className="text-3xl md:text-6xl">DAY</div>{" "}
+                  {/* Changed to responsive sizes */}
+                  <div className="text-3xl md:text-7xl">
                     {(index + 1).toString().padStart(2, "0")}
                   </div>
                   <div className="text-white/20 text-2xl pt-4">

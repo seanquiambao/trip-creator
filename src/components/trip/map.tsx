@@ -15,6 +15,8 @@ const libraries: "places"[] = ["places"];
 const containerStyle = {
   width: "100%",
   height: "100%",
+  maxWidth: "800px",
+  margin: "0 auto",
 };
 
 const center = {
@@ -90,7 +92,7 @@ const Map = ({ days, setDays, tripid }: props) => {
               ref={inputRef}
               type="text"
               placeholder="Search for a place"
-              className="w-96 p-3 rounded-lg border border-gray-300 shadow-md focus:ring-2 focus:ring-trip-navy focus:border-trip-navy outline-none bg-white"
+              className="w-full md:w-96 p-3 rounded-lg border border-gray-300 shadow-md focus:ring-2 focus:ring-trip-navy focus:border-trip-navy outline-none bg-white"
             />
           </StandaloneSearchBox>
         </div>
