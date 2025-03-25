@@ -69,8 +69,9 @@ const Days = ({ tripDate, days, setDays, tripid }: props) => {
             <div className="flex flex-col items-center justify-center w-full">
               <div className="flex items-center gap-6">
                 <div className="font-bold text-center">
-                  <div className="text-4xl">DAY</div>
-                  <div className="text-5xl">
+                  <div className="text-3xl md:text-6xl">DAY</div>{" "}
+                  {/* Changed to responsive sizes */}
+                  <div className="text-3xl md:text-7xl">
                     {(index + 1).toString().padStart(2, "0")}
                   </div>
                   <div className="text-white/20 text-2xl pt-4">
